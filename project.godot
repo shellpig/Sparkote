@@ -25,6 +25,8 @@ DayCycle="*res://scripts/autoload/day_cycle.gd"
 SaveService="*res://scripts/autoload/save_service.gd"
 UINavigation="*res://scripts/autoload/ui_navigation.gd"
 EventSystem="*res://scripts/systems/event_system.gd"
+Exploration="*res://scripts/systems/exploration.gd"
+
 
 [editor_plugins]
 

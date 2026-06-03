@@ -17,13 +17,13 @@
 - **核心體驗**：現實完成小任務 → 獲得能量 → 翻開未知地圖格 → 取得資源 / 事件 / 物品 → 回饋家園與劇情
 - **目標平台**：iOS 先行，Android 第二次整合
 - **變現策略**：免費遊玩，rewarded ad、一次性無廣告、外觀裝飾、家園資源包；不直接賣能量 / 任務完成 / 主線探索進度
-- **目前狀態**：Phase 1-A 架構地基已完成並通過 headless GUT 驗證；1-A 產物仍待整理提交
-- **下一步**：Phase 1-B 任務 + 能量
+- **目前狀態**：Phase 1-A / 1-B / 1-C 已完成並通過 headless GUT 驗證；1-C 已建立 Exploration、解鎖地圖與佔位地圖頁
+- **下一步**：Phase 1-D 事件 + 日記
 
 最新 commit：
 
 ```text
-dd49d5b Add project brief and update docs
+3d0acde Implement Phase 1-B: Task System, Day Cycle, and Task Page UI
 ```
 
 ## 核心調性
@@ -175,9 +175,9 @@ loader 必須對壞資料明確報錯、不靜默、不崩。最小 schema 見 `
 
 | Phase | 狀態 | 概要 |
 |---|---|---|
-| 1-A 架構地基 | 已完成（headless GUT 通過；待整理提交） | `GameState`、`Config`、`Content` fixture loader、`SaveService`、`AdService` stub、`EventSystem` seam、`UINavigation`、啟動 / debug 場景 |
-| 1-B 任務 + 能量 | 待開工 | `TaskSystem`、`DayCycle`、任務頁、能量產出與提示 |
-| 1-C 探索翻格 | 待開工 | 相鄰 graph、霧、逐格成本、岔路、五種地點類型、資源點首採、多地圖切換 |
+| 1-A 架構地基 | 已完成（headless GUT 通過） | `GameState`、`Config`、`Content` fixture loader、`SaveService`、`AdService` stub、`EventSystem` seam、`UINavigation`、啟動 / debug 場景 |
+| 1-B 任務 + 能量 | 已完成（headless GUT 通過；主場景啟動正常） | `TaskSystem`、`DayCycle`、任務頁、能量產出與提示 |
+| 1-C 探索翻格 | 已完成（headless GUT 通過；地圖頁切換正常） | 相鄰 graph、霧、逐格成本、岔路、五種地點類型、資源點首採、多地圖切換 |
 | 1-D 事件 + 日記 | 待開工 | 事件播放器、選項、獎勵 / 效果、日記頁、事件回看、心情筆記 |
 | 1-E 家園 + 資源點 | 待開工 | 家園修復、插槽式佈置、資源點重採、集中採集頁 |
 | 2 內容生產 + 測試 | 待規劃 | D1-D7 手感閘門；真任務池、真事件、真地圖、真家園定義；過閘門後量產第一版內容 |
@@ -271,7 +271,7 @@ C:\_work\Godot_v4.6.3\Godot_v4.6.3-stable_win64_console.exe --headless -s addons
 
 ## 目前已知邊界
 
-- Godot 專案本體已建立；1-A 產物仍待整理提交。
+- Godot 專案本體已建立；Phase 1-A / 1-B 已提交。
 - `subdocs/` 尚未建立；等內容 / 場景 phase 開工再新增。
 - `驗證後已知問題.md` 尚未建立。
 - `ArtBible/` 已有參考圖，但 Phase 4 前不整合正式美術。
@@ -282,26 +282,23 @@ C:\_work\Godot_v4.6.3\Godot_v4.6.3-stable_win64_console.exe --headless -s addons
 
 ## 下一步建議
 
-短線最合理下一步：**Phase 1-B 任務 + 能量**。
+短線最合理下一步：**Phase 1-D 事件 + 日記**。
 
 開工前先讀：
 
-- `遊戲規格書.md > §6~§7`
+- `遊戲規格書.md > §10`
 - `遊戲規格書.md > §20 Phase 1`
-- `開發設計方針.md > §5.1`
-- `開發設計方針.md > §6`
-- `開發設計方針.md > §7.1`
-- `測試指南.md > §4.2`
+- `開發設計方針.md > §7.3`
+- `測試指南.md > §4.4`
 
-Phase 1-A 完成標準：
+Phase 1-C 已驗證：
 
 ```text
-new_game 初始狀態正確
--> GameState 原子操作與 signals 正確
--> Config / Content fixture loader 可用
--> requirements 即時判定正確
--> SaveService round-trip 無損
--> AdService stub 成功 / 失敗皆可驗
--> UINavigation 根頁互斥 + overlay 還原正確
+Exploration.can_flip 支援鄰接 + requirements + 能量三關判定
+-> flip_tile 扣除能量並結算 5 種地點類型
+-> 出口地點解鎖新圖並自動開啟新起點
+-> 阻擋格能被 requirements 擋下與滿足時解除
+-> 霧遮蔽機制運作正常，不顯示非鄰接格
+-> 佔位地圖頁與地圖切換 dropdown 運作正常
 -> GUT headless 測試全綠
 ```

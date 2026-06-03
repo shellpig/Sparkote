@@ -1,7 +1,8 @@
-[gd_scene load_steps=3 format=3 uid="uid://cx6i8d7rby1q8"]
+[gd_scene load_steps=4 format=3 uid="uid://cx6i8d7rby1q8"]
 
 [ext_resource type="Script" path="res://scripts/ui/main.gd" id="1_1"]
 [ext_resource type="PackedScene" uid="uid://bsh2i31m0q1v4" path="res://scenes/ui/task_page.tscn" id="2_2"]
+[ext_resource type="PackedScene" uid="uid://c7t4f65p8b2c8" path="res://scenes/ui/map_page.tscn" id="3_3"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_1")
@@ -20,9 +21,34 @@ grow_vertical = 2
 layout_mode = 1
 anchors_preset = 15
 anchor_right = 1.0
-anchor_bottom = 1.0
+anchor_bottom = 0.9
 grow_horizontal = 2
 grow_vertical = 2
 
 [node name="TaskPage" parent="CanvasLayer/UIRoot/Pages" instance=ExtResource("2_2")]
 layout_mode = 1
+
+[node name="MapPage" parent="CanvasLayer/UIRoot/Pages" instance=ExtResource("3_3")]
+visible = false
+layout_mode = 1
+
+[node name="NavBar" type="HBoxContainer" parent="CanvasLayer/UIRoot"]
+layout_mode = 1
+anchors_preset = 12
+anchor_top = 0.9
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 0
+alignment = 1
+theme_override_constants/separation = 40
+
+[node name="TasksButton" type="Button" parent="CanvasLayer/UIRoot/NavBar"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+text = "Tasks"
+
+[node name="MapButton" type="Button" parent="CanvasLayer/UIRoot/NavBar"]
+custom_minimum_size = Vector2(150, 40)
+layout_mode = 2
+text = "Map"
