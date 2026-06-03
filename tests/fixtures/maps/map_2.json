@@ -9,9 +9,18 @@
     {
       "id": "tile_sky_start",
       "position": [0, 0],
-      "neighbors": [],
+      "neighbors": ["tile_sky_discovery"],
       "cost": 0,
       "type": "start"
+    },
+    {
+      "id": "tile_sky_discovery",
+      "position": [1, 0],
+      "neighbors": ["tile_sky_start"],
+      "cost": 1,
+      "type": "discovery",
+      "rewards": {"stone": 3},
+      "text": "You found floating stone pieces on the cloud island!"
     }
   ]
 }

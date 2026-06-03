@@ -141,6 +141,10 @@ func test_exit_unlocks_new_map_and_reveals_start():
 	assert_true(GameState.is_map_unlocked("map_2"))
 	# map_2 start tile (tile_sky_start) should be automatically revealed
 	assert_true(GameState.is_tile_revealed("map_2", "tile_sky_start"))
+	
+	# map_2 next progression tile should be selectable (not a dead map)
+	var check_next = Exploration.can_flip("map_2", "tile_sky_discovery")
+	assert_true(check_next.get("ok"))
 
 func test_forking_choices_and_bypassing():
 	GameState.add_energy(15)
