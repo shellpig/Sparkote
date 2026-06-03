@@ -17,13 +17,13 @@
 - **核心體驗**：現實完成小任務 → 獲得能量 → 翻開未知地圖格 → 取得資源 / 事件 / 物品 → 回饋家園與劇情
 - **目標平台**：iOS 先行，Android 第二次整合
 - **變現策略**：免費遊玩，rewarded ad、一次性無廣告、外觀裝飾、家園資源包；不直接賣能量 / 任務完成 / 主線探索進度
-- **目前狀態**：Phase 1-A / 1-B / 1-C 已完成並通過 headless GUT 驗證；1-C 已建立 Exploration、解鎖地圖與佔位地圖頁
-- **下一步**：Phase 1-D 事件 + 日記
+- **目前狀態**：Phase 1-A / 1-B / 1-C / 1-D 已完成並通過 headless GUT 驗證；1-D 已建立事件播放器、日記頁與心情筆記
+- **下一步**：Phase 1-E 家園 + 資源點
 
 最新 commit：
 
 ```text
-3d0acde Implement Phase 1-B: Task System, Day Cycle, and Task Page UI
+46459eb Fix dead map fixture issue for unlocked maps and stage Godot UIDs
 ```
 
 ## 核心調性
@@ -178,7 +178,7 @@ loader 必須對壞資料明確報錯、不靜默、不崩。最小 schema 見 `
 | 1-A 架構地基 | 已完成（headless GUT 通過） | `GameState`、`Config`、`Content` fixture loader、`SaveService`、`AdService` stub、`EventSystem` seam、`UINavigation`、啟動 / debug 場景 |
 | 1-B 任務 + 能量 | 已完成（headless GUT 通過；主場景啟動正常） | `TaskSystem`、`DayCycle`、任務頁、能量產出與提示 |
 | 1-C 探索翻格 | 已完成（headless GUT 通過；地圖頁切換正常） | 相鄰 graph、霧、逐格成本、岔路、五種地點類型、資源點首採、多地圖切換 |
-| 1-D 事件 + 日記 | 待開工 | 事件播放器、選項、獎勵 / 效果、日記頁、事件回看、心情筆記 |
+| 1-D 事件 + 日記 | 已完成（headless GUT 通過；支持重播與心情筆記） | 事件播放器、選項、獎勵 / 效果、日記頁、事件回看、心情筆記 |
 | 1-E 家園 + 資源點 | 待開工 | 家園修復、插槽式佈置、資源點重採、集中採集頁 |
 | 2 內容生產 + 測試 | 待規劃 | D1-D7 手感閘門；真任務池、真事件、真地圖、真家園定義；過閘門後量產第一版內容 |
 | 3 變現整合 | 待規劃 | 真 `AdService`、遊戲商店、IAP、無廣告、每日免費領取、恢復購買 |
@@ -282,23 +282,23 @@ C:\_work\Godot_v4.6.3\Godot_v4.6.3-stable_win64_console.exe --headless -s addons
 
 ## 下一步建議
 
-短線最合理下一步：**Phase 1-D 事件 + 日記**。
+短線最合理下一步：**Phase 1-E 家園 + 資源點**。
 
 開工前先讀：
 
-- `遊戲規格書.md > §10`
+- `遊戲規格書.md > §11~§13`
 - `遊戲規格書.md > §20 Phase 1`
-- `開發設計方針.md > §7.3`
-- `測試指南.md > §4.4`
+- `開發設計方針.md > §7.4`
+- `測試指南.md > §4.5`
 
-Phase 1-C 已驗證：
+Phase 1-D 已驗證：
 
 ```text
-Exploration.can_flip 支援鄰接 + requirements + 能量三關判定
--> flip_tile 扣除能量並結算 5 種地點類型
--> 出口地點解鎖新圖並自動開啟新起點
--> 阻擋格能被 requirements 擋下與滿足時解除
--> 霧遮蔽機制運作正常，不顯示非鄰接格
--> 佔位地圖頁與地圖切換 dropdown 運作正常
+EventSystem.play 載入並引導播放內容頁
+-> resolve 結算選擇，發放獎勵，套用 effects
+-> 支援對話分支，不同選項有各自獨立的獎勵與日記日誌
+-> replay 重播模式加載歷史選擇並防止重複發獎
+-> 日記頁面支持逐日審閱、統計與已解鎖事件重播
+-> 心情筆記當今日任務全部做完時彈窗提示，可補寫與儲存
 -> GUT headless 測試全綠
 ```

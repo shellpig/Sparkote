@@ -6,7 +6,21 @@ func play(event_id: String) -> void:
 		printerr("EventSystem: Event not found: ", event_id)
 		return
 	
-	UINavigation.open_overlay("event_player", {"event_id": event_id, "data": event_data})
+	UINavigation.open_overlay("event_player", {"event_id": event_id, "data": event_data, "is_replay": false})
+
+func replay(event_id: String) -> void:
+	var event_data = Content.get_event(event_id)
+	if event_data.is_empty():
+		printerr("EventSystem: Event not found: ", event_id)
+		return
+
+	var choice_idx = GameState.get_event_choice(event_id)
+	UINavigation.open_overlay("event_player", {
+		"event_id": event_id,
+		"data": event_data,
+		"is_replay": true,
+		"choice_idx": choice_idx
+	})
 
 func resolve(event_id: String, choice_idx: int) -> void:
 	var event_data = Content.get_event(event_id)

@@ -1,0 +1,92 @@
+[gd_scene load_steps=2 format=3 uid="uid://dm0y3p2a1q3n8"]
+
+[ext_resource type="Script" path="res://scripts/ui/diary_page.gd" id="1_1"]
+
+[node name="DiaryPage" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_1")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 15
+
+[node name="Header" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
+theme_override_constants/separation = 20
+
+[node name="TitleLabel" type="Label" parent="VBoxContainer/Header"]
+layout_mode = 2
+text = "Diary - Day 1"
+
+[node name="PrevButton" type="Button" parent="VBoxContainer/Header"]
+custom_minimum_size = Vector2(40, 30)
+layout_mode = 2
+text = "<"
+
+[node name="NextButton" type="Button" parent="VBoxContainer/Header"]
+custom_minimum_size = Vector2(40, 30)
+layout_mode = 2
+text = ">"
+
+[node name="ScrollContainer" type="ScrollContainer" parent="VBoxContainer"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="Body" type="VBoxContainer" parent="VBoxContainer/ScrollContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 15
+
+[node name="Stats" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/Body"]
+layout_mode = 2
+
+[node name="EnergyLabel" type="Label" parent="VBoxContainer/ScrollContainer/Body/Stats"]
+layout_mode = 2
+text = "Energy Earned Today: 0"
+
+[node name="TilesLabel" type="Label" parent="VBoxContainer/ScrollContainer/Body/Stats"]
+layout_mode = 2
+text = "Tiles Flipped Today: 0"
+
+[node name="TasksTitle" type="Label" parent="VBoxContainer/ScrollContainer/Body"]
+layout_mode = 2
+text = "--- Completed Tasks ---"
+
+[node name="TasksContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/Body"]
+layout_mode = 2
+
+[node name="EventsTitle" type="Label" parent="VBoxContainer/ScrollContainer/Body"]
+layout_mode = 2
+text = "--- Resolved Events ---"
+
+[node name="EventsContainer" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/Body"]
+layout_mode = 2
+
+[node name="MoodNoteSection" type="VBoxContainer" parent="VBoxContainer/ScrollContainer/Body"]
+layout_mode = 2
+theme_override_constants/separation = 10
+
+[node name="MoodLabel" type="Label" parent="VBoxContainer/ScrollContainer/Body/MoodNoteSection"]
+layout_mode = 2
+text = "Daily Mood Note:"
+
+[node name="MoodNoteEdit" type="TextEdit" parent="VBoxContainer/ScrollContainer/Body/MoodNoteSection"]
+custom_minimum_size = Vector2(0, 80)
+layout_mode = 2
+placeholder_text = "How are you feeling today?"
+
+[node name="SaveMoodButton" type="Button" parent="VBoxContainer/ScrollContainer/Body/MoodNoteSection"]
+custom_minimum_size = Vector2(150, 35)
+layout_mode = 2
+size_flags_horizontal = 0
+text = "Save Mood Note"
