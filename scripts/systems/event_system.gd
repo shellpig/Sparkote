@@ -23,6 +23,11 @@ func replay(event_id: String) -> void:
 	})
 
 func resolve(event_id: String, choice_idx: int) -> void:
+	if GameState.is_event_completed(event_id):
+		printerr("EventSystem: Event already completed: ", event_id)
+		UINavigation.close_overlay()
+		return
+
 	var event_data = Content.get_event(event_id)
 	if event_data.is_empty():
 		printerr("EventSystem: Resolve failed, event not found: ", event_id)

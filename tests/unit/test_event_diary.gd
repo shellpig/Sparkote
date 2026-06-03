@@ -92,6 +92,21 @@ func test_event_replay_mode_safety():
 	# Assert no duplicate diary logs
 	assert_true(diary_day["unlocked_events"].is_empty())
 
+func test_event_double_resolve_prevention():
+	EventSystem.play("evt_01")
+	EventSystem.resolve("evt_01", 0)
+	assert_true(GameState.has_task_item("door_key", 1))
+
+	# Clear items to verify resolve exits early next time
+	GameState.task_items.clear()
+	assert_false(GameState.has_task_item("door_key"))
+
+	# Attempt double resolve
+	EventSystem.resolve("evt_01", 0)
+
+	# Verify rewards were NOT re-allocated
+	assert_false(GameState.has_task_item("door_key"))
+
 func test_diary_aggregation():
 	# 1. Complete task
 	TaskSystem.roll_today()
