@@ -17,13 +17,13 @@
 - **核心體驗**：現實完成小任務 → 獲得能量 → 翻開未知地圖格 → 取得資源 / 事件 / 物品 → 回饋家園與劇情
 - **目標平台**：iOS 先行，Android 第二次整合
 - **變現策略**：免費遊玩，rewarded ad、一次性無廣告、外觀裝飾、家園資源包；不直接賣能量 / 任務完成 / 主線探索進度
-- **目前狀態**：Phase 1-A / 1-B / 1-C / 1-D 已完成並通過 headless GUT 驗證；1-D 已建立事件播放器、日記頁與心情筆記
-- **下一步**：Phase 1-E 家園 + 資源點
+- **目前狀態**：Phase 1-A / 1-B / 1-C / 1-D / 1-E 已完成並通過 headless GUT 驗證；Phase 1 全部子階段完成
+- **下一步**：Phase 2-A 地基（能量參數表、跳日鈕、headless 經濟曲線模擬）
 
 最新 commit：
 
 ```text
-46459eb Fix dead map fixture issue for unlocked maps and stage Godot UIDs
+62a47c8 Implement Phase 1-E: HomeSystem, ResourcePoint, Home UI, and Phase 1 smoke test
 ```
 
 ## 核心調性
@@ -179,7 +179,7 @@ loader 必須對壞資料明確報錯、不靜默、不崩。最小 schema 見 `
 | 1-B 任務 + 能量 | 已完成（headless GUT 通過；主場景啟動正常） | `TaskSystem`、`DayCycle`、任務頁、能量產出與提示 |
 | 1-C 探索翻格 | 已完成（headless GUT 通過；地圖頁切換正常） | 相鄰 graph、霧、逐格成本、岔路、五種地點類型、資源點首採、多地圖切換 |
 | 1-D 事件 + 日記 | 已完成（headless GUT 通過；支持重播與心情筆記） | 事件播放器、選項、獎勵 / 效果、日記頁、事件回看、心情筆記 |
-| 1-E 家園 + 資源點 | 待開工 | 家園修復、插槽式佈置、資源點重採、集中採集頁 |
+| 1-E 家園 + 資源點 | 已完成（headless GUT 通過；79/79 全綠） | HomeSystem 修復/插槽、ResourcePoint 重採/集中採集、佔位家園頁 |
 | 2 內容生產 + 測試 | 規格收斂（核心=能量/資源/家園成長迴圈） | 子階段 2-A 地基 / 2-B 內容 / 2-C 手感閘門(de-risk) / 2-D 量產；subdocs 以區域為主軸 + `_global/` 總則。詳見規格書 §20 |
 | 3 變現整合 | 待規劃 | 真 `AdService`、遊戲商店、IAP、無廣告、每日免費領取、恢復購買 |
 | 4 美術整合 + 正式 UI | 待規劃 | ArtBible 換掉佔位：等角地圖、露營車內外、事件插圖、UI skin、動態回饋 |
@@ -282,23 +282,20 @@ C:\_work\Godot_v4.6.3\Godot_v4.6.3-stable_win64_console.exe --headless -s addons
 
 ## 下一步建議
 
-短線最合理下一步：**Phase 1-E 家園 + 資源點**。
+短線最合理下一步：**Phase 2-A 地基**。
 
 開工前先讀：
 
-- `遊戲規格書.md > §11~§13`
-- `遊戲規格書.md > §20 Phase 1`
-- `開發設計方針.md > §7.4`
-- `測試指南.md > §4.5`
+- `遊戲規格書.md > §20 Phase 2`
+- `開發設計方針.md > Phase 2 相關`
 
-Phase 1-D 已驗證：
+Phase 1-E 已驗證：
 
 ```text
-EventSystem.play 載入並引導播放內容頁
--> resolve 結算選擇，發放獎勵，套用 effects
--> 支援對話分支，不同選項有各自獨立的獎勵與日記日誌
--> replay 重播模式加載歷史選擇並防止重複發獎
--> 日記頁面支持逐日審閱、統計與已解鎖事件重播
--> 心情筆記當今日任務全部做完時彈窗提示，可補寫與儲存
--> GUT headless 測試全綠
+HomeSystem.repair 消耗資源推進修復等級並記日記
+-> place_furniture/remove_furniture 插槽類型驗證、完全不改能量/探索
+-> ResourcePoint.collect 扣能量、發產出、標記計數；次數用完拒採
+-> get_collectable_points 跨地圖掃描已開資源點今日狀態
+-> 佔位家園頁 + 集中採集子面板
+-> GUT headless 79/79 全綠（含 Phase 1 端到端煙霧測試）
 ```
