@@ -1,10 +1,11 @@
-[gd_scene load_steps=6 format=3 uid="uid://cx6i8d7rby1q8"]
+[gd_scene load_steps=7 format=3 uid="uid://cx6i8d7rby1q8"]
 
 [ext_resource type="Script" path="res://scripts/ui/main.gd" id="1_1"]
 [ext_resource type="PackedScene" uid="uid://bsh2i31m0q1v4" path="res://scenes/ui/task_page.tscn" id="2_2"]
 [ext_resource type="PackedScene" uid="uid://c7t4f65p8b2c8" path="res://scenes/ui/map_page.tscn" id="3_3"]
 [ext_resource type="PackedScene" uid="uid://dm0y3p2a1q3n8" path="res://scenes/ui/diary_page.tscn" id="4_4"]
 [ext_resource type="PackedScene" uid="uid://bpd2w57p6m1v1" path="res://scenes/ui/event_player.tscn" id="5_5"]
+[ext_resource type="PackedScene" uid="uid://home_page_1e" path="res://scenes/ui/home_page.tscn" id="6_6"]
 
 [node name="Main" type="Node"]
 script = ExtResource("1_1")
@@ -38,6 +39,10 @@ layout_mode = 1
 visible = false
 layout_mode = 1
 
+[node name="HomePage" parent="CanvasLayer/UIRoot/Pages" instance=ExtResource("6_6")]
+visible = false
+layout_mode = 1
+
 [node name="NavBar" type="HBoxContainer" parent="CanvasLayer/UIRoot"]
 layout_mode = 1
 anchors_preset = 12
@@ -47,20 +52,25 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 0
 alignment = 1
-theme_override_constants/separation = 40
+theme_override_constants/separation = 30
 
 [node name="TasksButton" type="Button" parent="CanvasLayer/UIRoot/NavBar"]
-custom_minimum_size = Vector2(120, 40)
+custom_minimum_size = Vector2(100, 40)
 layout_mode = 2
 text = "Tasks"
 
 [node name="MapButton" type="Button" parent="CanvasLayer/UIRoot/NavBar"]
-custom_minimum_size = Vector2(120, 40)
+custom_minimum_size = Vector2(100, 40)
 layout_mode = 2
 text = "Map"
 
+[node name="HomeButton" type="Button" parent="CanvasLayer/UIRoot/NavBar"]
+custom_minimum_size = Vector2(100, 40)
+layout_mode = 2
+text = "Home"
+
 [node name="DiaryButton" type="Button" parent="CanvasLayer/UIRoot/NavBar"]
-custom_minimum_size = Vector2(120, 40)
+custom_minimum_size = Vector2(100, 40)
 layout_mode = 2
 text = "Diary"
 
@@ -109,3 +119,4 @@ text = "Write Now"
 custom_minimum_size = Vector2(120, 35)
 layout_mode = 2
 text = "Later"
+

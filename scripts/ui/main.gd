@@ -3,9 +3,11 @@ extends Node
 @onready var task_page: Control = $CanvasLayer/UIRoot/Pages/TaskPage
 @onready var map_page: Control = $CanvasLayer/UIRoot/Pages/MapPage
 @onready var diary_page: Control = $CanvasLayer/UIRoot/Pages/DiaryPage
+@onready var home_page: Control = $CanvasLayer/UIRoot/Pages/HomePage
 
 @onready var tasks_button: Button = $CanvasLayer/UIRoot/NavBar/TasksButton
 @onready var map_button: Button = $CanvasLayer/UIRoot/NavBar/MapButton
+@onready var home_button: Button = $CanvasLayer/UIRoot/NavBar/HomeButton
 @onready var diary_button: Button = $CanvasLayer/UIRoot/NavBar/DiaryButton
 
 @onready var event_player: Control = $CanvasLayer/UIRoot/EventPlayer
@@ -29,6 +31,7 @@ func _ready() -> void:
 	# Wire up navigation buttons
 	tasks_button.pressed.connect(func(): UINavigation.navigate("task"))
 	map_button.pressed.connect(func(): UINavigation.navigate("map"))
+	home_button.pressed.connect(func(): UINavigation.navigate("home"))
 	diary_button.pressed.connect(func(): UINavigation.navigate("diary"))
 
 	# Wire up mood popup buttons
@@ -46,6 +49,8 @@ func _on_navigation_changed(active_page: String) -> void:
 			if diary_page.visible:
 				diary_page.viewed_day = GameState.game_day
 				diary_page.refresh()
+		if home_page:
+			home_page.visible = (active_page == "home")
 
 func _on_overlay_opened(kind: String) -> void:
 	if kind == "event_player":
@@ -74,3 +79,4 @@ func _on_write_mood_now() -> void:
 
 func _on_later_pressed() -> void:
 	mood_prompt_panel.visible = false
+

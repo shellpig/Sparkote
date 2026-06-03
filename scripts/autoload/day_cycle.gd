@@ -14,5 +14,9 @@ func advance_day() -> void:
 	GameState.reset_today_tasks()
 	GameState.reset_daily_flags()
 
-	# 4. Roll candidates for the new day
+	# 4. Reset resource point daily collect counts (§11: daily limit restores each day)
+	GameState.collected_resource_points.clear()
+
+	# 5. Roll candidates for the new day
 	TaskSystem.roll_today()
+

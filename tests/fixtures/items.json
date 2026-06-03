@@ -5,6 +5,7 @@
     {"id": "magic_spore", "kind": "resource", "display_name": "Magic Spore", "resource_tier": "specialty"},
     {"id": "door_key", "kind": "task_item", "display_name": "Old Key"},
     {"id": "chair_1", "kind": "furniture", "display_name": "Cozy Chair", "furniture_type": "chair"},
+    {"id": "table_1", "kind": "furniture", "display_name": "Wooden Table", "furniture_type": "table"},
     {"id": "paint_red", "kind": "skin", "display_name": "Red Camper Skin"},
     {"id": "postcard_1", "kind": "collection", "display_name": "Forest Postcard"}
   ]

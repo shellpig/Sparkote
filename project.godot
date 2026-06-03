@@ -26,6 +26,8 @@ SaveService="*res://scripts/autoload/save_service.gd"
 UINavigation="*res://scripts/autoload/ui_navigation.gd"
 EventSystem="*res://scripts/systems/event_system.gd"
 Exploration="*res://scripts/systems/exploration.gd"
+HomeSystem="*res://scripts/systems/home_system.gd"
+ResourcePoint="*res://scripts/systems/resource_point.gd"
 
 
 [editor_plugins]

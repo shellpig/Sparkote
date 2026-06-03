@@ -9,7 +9,7 @@
     {
       "id": "tile_sky_start",
       "position": [0, 0],
-      "neighbors": ["tile_sky_discovery"],
+      "neighbors": ["tile_sky_discovery", "tile_sky_resource"],
       "cost": 0,
       "type": "start"
     },
@@ -21,6 +21,15 @@
       "type": "discovery",
       "rewards": {"stone": 3},
       "text": "You found floating stone pieces on the cloud island!"
+    },
+    {
+      "id": "tile_sky_resource",
+      "position": [0, 1],
+      "neighbors": ["tile_sky_start"],
+      "cost": 2,
+      "type": "resource_point",
+      "first_rewards": {"magic_spore": 2},
+      "collect_rewards": {"magic_spore": 1}
     }
   ]
 }
