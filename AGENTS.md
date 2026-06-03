@@ -16,23 +16,23 @@
 
 At conversation start, read in this layered order. Ignore `舊文件/`.
 
-**Layer 1 — 必讀（建立全貌）：**
-1. `AGENTS.md`（本檔）
-2. `遊戲規格書.md`（全遊戲通用系統規格、核心循環、系統分層、`GameState` / Content 模型、Phase 規劃與驗收條件；場景專屬規格之後 link 到 `subdocs/`）
-3. `ArtBible/`（美術方向參考圖：等角地圖、露營車內外、事件插圖；延到 Phase 4 整合，Phase 1~2 全用佔位）
-4. `git log --oneline -10`（近期變更）
+**Layer 1 — Always read (build full picture fast):**
+1. `AGENTS.md` (this file)
+2. `PROJECT_BRIEF.md` (architecture, progress, spec index)
+3. `驗證後已知問題.md` (current todos and known gaps)
+4. `git log --oneline -10` (recent commits)
 
-**Layer 2 — 實作 / 測試文件（自 Phase 1 起寫，Sparkote 無歷史包袱）：**
-- `開發設計方針.md` — 實作細節、檔案結構、Autoload 職責 / 簽名、signal、資料契約（implementer-owned）
-- `測試指南.md` — Godot 測試流程（GUT headless）、手動驗收清單（verifier-owned）
-- `驗證後已知問題.md` — 待修清單與已接受的邊界決定（Phase 2-E 收尾時才建立，尚未存在）
+**Layer 2 — Expand per current task (targeted sections only):**
+- Use line-number index in `PROJECT_BRIEF.md` to read only relevant sections of `遊戲規格書.md` / `開發設計方針.md` / `測試指南.md`. Don't read entire files.
 
 **Layer 3 — 任務相關細節與實作參考：**
 
-- `Sparkote_故事提案.md`（世界觀「群島霧海浮空郵差」、主角蕾拉、核心劇情驅動、第一/二封信開局）
+- `開發設計方針.md` — 實作細節、檔案位置、資料契約、類別 / 函式設計
+- `測試指南.md` — 驗證指令、測試範圍、手動驗收清單
+- `驗證後已知問題.md` — 當前未完成項、驗收缺口、使用者已接受的邊界決定
+- `主角與故事提案.md`（世界觀「群島霧海浮空郵差」、主角蕾拉、核心劇情驅動、第一/二封信開局）
 - `廣告spike清單.md` — iOS rewarded ad spike 驗證清單（已通過，`AdService` 介面沿用即可）
 - `subdocs/` — 場景 / 內容專屬規格（各地圖、事件劇情、角色、家園佈置細節），按主題分子資料夾；**只在該場景 / 內容 phase 開工時新增**，目前尚未建立
-- `舊文件/Sparkote_設計文件.md` — 早期發想筆記，**僅供參考、非實作依據**
 - agent-sprite-forge 工具（位置見「專案外部工具路徑」）
 - Godot 專案 source code（建立後）
 
