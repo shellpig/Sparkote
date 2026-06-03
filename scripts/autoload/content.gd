@@ -13,6 +13,14 @@ func _ready() -> void:
 		var err = load_all()
 		if err != OK:
 			print("Content: Default content load returned ", err)
+	else:
+		var fallback_dir = "res://tests/fixtures/"
+		if FileAccess.file_exists(fallback_dir + "tasks.json"):
+			content_dir = fallback_dir
+			var err = load_all()
+			if err != OK:
+				print("Content: Fallback content load returned ", err)
+
 
 func load_all() -> Error:
 	_tasks.clear()
@@ -228,3 +236,14 @@ func get_home_slots() -> Array:
 
 func get_home_repairs() -> Array:
 	return _home.get("repairs", [])
+
+func get_task(task_id: String) -> Dictionary:
+	var normal = _tasks.get("normal", [])
+	for t in normal:
+		if t.get("id") == task_id:
+			return t
+	var advanced = _tasks.get("advanced", [])
+	for t in advanced:
+		if t.get("id") == task_id:
+			return t
+	return {}

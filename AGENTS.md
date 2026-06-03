@@ -19,8 +19,7 @@ At conversation start, read in this layered order. Ignore `舊文件/`.
 **Layer 1 — Always read (build full picture fast):**
 1. `AGENTS.md` (this file)
 2. `PROJECT_BRIEF.md` (architecture, progress, spec index)
-3. `驗證後已知問題.md` (current todos and known gaps)
-4. `git log --oneline -10` (recent commits)
+3. `git log --oneline -10` (recent commits)
 
 **Layer 2 — Expand per current task (targeted sections only):**
 - Use line-number index in `PROJECT_BRIEF.md` to read only relevant sections of `遊戲規格書.md` / `開發設計方針.md` / `測試指南.md`. Don't read entire files.
@@ -84,7 +83,7 @@ Image generation handling:
 
 **規劃中：**
 - `subdocs/` — 場景 / 內容專屬規格（地圖、事件劇情、角色、家園）；只在該 phase 開工時才寫，完成後 freeze 為歷史快照，不預建空殼。
-- `驗證後已知問題.md` — 驗收問題追蹤與已接受的邊界決定。Phase 2-E 收尾時建立。
+- `驗證後已知問題.md` — 驗收問題追蹤與已接受的邊界決定。有需要時會主動要求AI紀錄。
 - `PROJECT_BRIEF.md` — 專案總覽與 Phase 進度表。規格書 + 設計方針合計 > 100 KB 時才建立；在那之前 `遊戲規格書.md > Phase 規劃` 為 Phase 進度單一事實來源。
 
 ## 專案外部工具路徑

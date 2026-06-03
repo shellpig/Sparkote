@@ -19,8 +19,10 @@ config/features=PackedStringArray("4.6", "GL Compatibility")
 Config="*res://scripts/autoload/config.gd"
 GameState="*res://scripts/autoload/game_state.gd"
 Content="*res://scripts/autoload/content.gd"
-SaveService="*res://scripts/autoload/save_service.gd"
 AdService="*res://scripts/autoload/ad_service.gd"
+TaskSystem="*res://scripts/autoload/task_system.gd"
+DayCycle="*res://scripts/autoload/day_cycle.gd"
+SaveService="*res://scripts/autoload/save_service.gd"
 UINavigation="*res://scripts/autoload/ui_navigation.gd"
 EventSystem="*res://scripts/systems/event_system.gd"
 

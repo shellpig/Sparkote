@@ -17,13 +17,13 @@
 - **核心體驗**：現實完成小任務 → 獲得能量 → 翻開未知地圖格 → 取得資源 / 事件 / 物品 → 回饋家園與劇情
 - **目標平台**：iOS 先行，Android 第二次整合
 - **變現策略**：免費遊玩，rewarded ad、一次性無廣告、外觀裝飾、家園資源包；不直接賣能量 / 任務完成 / 主線探索進度
-- **目前狀態**：規格與 Phase 1 實作契約已收斂，**尚未開始 Godot 實作**
-- **下一步**：Phase 1-A 架構地基
+- **目前狀態**：Phase 1-A 架構地基已完成並通過 headless GUT 驗證；1-A 產物仍待整理提交
+- **下一步**：Phase 1-B 任務 + 能量
 
 最新 commit：
 
 ```text
-69ab82f Update story proposal files
+dd49d5b Add project brief and update docs
 ```
 
 ## 核心調性
@@ -65,7 +65,7 @@
 
 ## 目錄結構
 
-目前尚未建立 Godot 專案本體。Phase 1-A 預計建立以下結構：
+Godot 專案本體已建立。Phase 1-A 已建立以下架構骨架：
 
 ```text
 .
@@ -175,7 +175,7 @@ loader 必須對壞資料明確報錯、不靜默、不崩。最小 schema 見 `
 
 | Phase | 狀態 | 概要 |
 |---|---|---|
-| 1-A 架構地基 | 待開工 | `GameState`、`Config`、`Content` fixture loader、`SaveService`、`AdService` stub、`EventSystem` seam、`UINavigation`、啟動 / debug 場景 |
+| 1-A 架構地基 | 已完成（headless GUT 通過；待整理提交） | `GameState`、`Config`、`Content` fixture loader、`SaveService`、`AdService` stub、`EventSystem` seam、`UINavigation`、啟動 / debug 場景 |
 | 1-B 任務 + 能量 | 待開工 | `TaskSystem`、`DayCycle`、任務頁、能量產出與提示 |
 | 1-C 探索翻格 | 待開工 | 相鄰 graph、霧、逐格成本、岔路、五種地點類型、資源點首採、多地圖切換 |
 | 1-D 事件 + 日記 | 待開工 | 事件播放器、選項、獎勵 / 效果、日記頁、事件回看、心情筆記 |
@@ -271,7 +271,7 @@ C:\_work\Godot_v4.6.3\Godot_v4.6.3-stable_win64_console.exe --headless -s addons
 
 ## 目前已知邊界
 
-- Godot 專案本體尚未建立。
+- Godot 專案本體已建立；1-A 產物仍待整理提交。
 - `subdocs/` 尚未建立；等內容 / 場景 phase 開工再新增。
 - `驗證後已知問題.md` 尚未建立。
 - `ArtBible/` 已有參考圖，但 Phase 4 前不整合正式美術。
@@ -282,15 +282,16 @@ C:\_work\Godot_v4.6.3\Godot_v4.6.3-stable_win64_console.exe --headless -s addons
 
 ## 下一步建議
 
-短線最合理下一步：**Phase 1-A 架構地基**。
+短線最合理下一步：**Phase 1-B 任務 + 能量**。
 
 開工前先讀：
 
-- `遊戲規格書.md > §4~§18`
+- `遊戲規格書.md > §6~§7`
 - `遊戲規格書.md > §20 Phase 1`
 - `開發設計方針.md > §5.1`
 - `開發設計方針.md > §6`
-- `測試指南.md > §4.1`
+- `開發設計方針.md > §7.1`
+- `測試指南.md > §4.2`
 
 Phase 1-A 完成標準：
 

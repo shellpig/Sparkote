@@ -527,3 +527,31 @@ func write_mood_note(day: int, note: String) -> void:
 func get_diary(day: int) -> Dictionary:
 	ensure_diary_day(day)
 	return diary[str(day)]
+
+func increment_day() -> void:
+	game_day += 1
+	day_advanced.emit()
+
+func reset_today_tasks() -> void:
+	today_candidates = {
+		"normal": [],
+		"advanced": []
+	}
+	today_selected = {
+		"normal": [],
+		"advanced": [],
+		"extra_advanced": ""
+	}
+	today_completed = []
+	super_task_completed_today = false
+	flags.erase("all_tasks_completed_today")
+	today_changed.emit()
+
+func reset_daily_flags() -> void:
+	daily_free_claimed = false
+	daily_ad_supply_claimed = false
+	daily_ad_extra_claimed = false
+
+func add_super_task_credit() -> void:
+	super_task_credits += 1
+	today_changed.emit()

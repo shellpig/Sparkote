@@ -1,3 +1,28 @@
-[gd_scene format=3 uid="uid://cx6i8d7rby1q8"]
+[gd_scene load_steps=3 format=3 uid="uid://cx6i8d7rby1q8"]
+
+[ext_resource type="Script" path="res://scripts/ui/main.gd" id="1_1"]
+[ext_resource type="PackedScene" uid="uid://bsh2i31m0q1v4" path="res://scenes/ui/task_page.tscn" id="2_2"]
 
 [node name="Main" type="Node"]
+script = ExtResource("1_1")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+
+[node name="UIRoot" type="Control" parent="CanvasLayer"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Pages" type="Control" parent="CanvasLayer/UIRoot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TaskPage" parent="CanvasLayer/UIRoot/Pages" instance=ExtResource("2_2")]
+layout_mode = 1
