@@ -1,0 +1,21 @@
+{
+  "task_energy": {
+    "normal": 1,
+    "advanced": 2,
+    "super": 3
+  },
+  "energy_cap": 20,
+  "energy_hint_threshold": 10,
+  "energy_near_cap_threshold": 18,
+  "daily_slots": {
+    "normal": 2,
+    "advanced": 1
+  },
+  "daily_candidates": {
+    "normal": 6,
+    "advanced": 3
+  },
+  "resource_point_recollect_cost": 1,
+  "resource_point_daily_limit": 1,
+  "weekly_super_threshold": 4
+}

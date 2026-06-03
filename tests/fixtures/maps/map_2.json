@@ -1,0 +1,17 @@
+{
+  "id": "map_2",
+  "name": "Cloud Island",
+  "world": "sky",
+  "region": "island",
+  "resource_bias": "stone",
+  "start_tile": "tile_sky_start",
+  "tiles": [
+    {
+      "id": "tile_sky_start",
+      "position": [0, 0],
+      "neighbors": [],
+      "cost": 0,
+      "type": "start"
+    }
+  ]
+}

@@ -1,0 +1,12 @@
+# Godot 4.x ignores
+.godot/
+*.translation
+
+# IDE/Editor ignores
+.idea/
+.vs/
+*.suo
+
+# OS ignores
+Thumbs.db
+Desktop.ini

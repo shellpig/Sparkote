@@ -1,0 +1,35 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="Sparkote"
+run/main_scene="res://scenes/main.tscn"
+config/features=PackedStringArray("4.6", "GL Compatibility")
+
+[autoload]
+
+Config="*res://scripts/autoload/config.gd"
+GameState="*res://scripts/autoload/game_state.gd"
+Content="*res://scripts/autoload/content.gd"
+SaveService="*res://scripts/autoload/save_service.gd"
+AdService="*res://scripts/autoload/ad_service.gd"
+UINavigation="*res://scripts/autoload/ui_navigation.gd"
+EventSystem="*res://scripts/systems/event_system.gd"
+
+[editor_plugins]
+
+enabled=PackedStringArray("res://addons/gut/plugin.cfg")
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+environment/defaults/default_clear_color=Color(0.08, 0.1, 0.12, 1)

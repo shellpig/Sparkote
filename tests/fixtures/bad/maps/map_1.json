@@ -1,0 +1,17 @@
+{
+  "id": "map_1",
+  "name": "Bad Map",
+  "world": "overworld",
+  "region": "forest",
+  "resource_bias": "wood",
+  "start_tile": "non_existent_start",
+  "tiles": [
+    {
+      "id": "tile_start",
+      "position": [0, 0],
+      "neighbors": [],
+      "cost": 0,
+      "type": "start"
+    }
+  ]
+}

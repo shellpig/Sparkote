@@ -1,0 +1,25 @@
+{
+  "events": [
+    {
+      "id": "evt_01",
+      "title": "A Mysterious Letter",
+      "replayable": true,
+      "pages": [
+        "You see a mailbox covered in mist.",
+        "Inside is a letter with no address, but it smells like rain."
+      ],
+      "choices": [
+        {
+          "text": "Open it gently",
+          "diary": "Opened the mysterious letter gently.",
+          "rewards": {"door_key": 1}
+        },
+        {
+          "text": "Tear it open",
+          "diary": "Tore open the mysterious letter.",
+          "rewards": {"wood": 1}
+        }
+      ]
+    }
+  ]
+}

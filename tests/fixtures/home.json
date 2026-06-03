@@ -1,0 +1,24 @@
+{
+  "slots": [
+    {"id": "slot_van_chair", "position": [1.0, 2.0], "accepts": ["chair"]},
+    {"id": "slot_van_table", "position": [3.0, 4.0], "accepts": ["table"]}
+  ],
+  "repairs": [
+    {
+      "id": "camper_engine",
+      "max_level": 2,
+      "levels": [
+        {
+          "level": 1,
+          "cost": {"wood": 5, "stone": 2},
+          "visual_state": "rusty_engine"
+        },
+        {
+          "level": 2,
+          "cost": {"wood": 10, "stone": 5},
+          "visual_state": "shiny_engine"
+        }
+      ]
+    }
+  ]
+}

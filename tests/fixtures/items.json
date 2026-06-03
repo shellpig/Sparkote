@@ -1,0 +1,11 @@
+{
+  "items": [
+    {"id": "wood", "kind": "resource", "display_name": "Wood Log", "resource_tier": "basic"},
+    {"id": "stone", "kind": "resource", "display_name": "Stone Chunk", "resource_tier": "basic"},
+    {"id": "magic_spore", "kind": "resource", "display_name": "Magic Spore", "resource_tier": "specialty"},
+    {"id": "door_key", "kind": "task_item", "display_name": "Old Key"},
+    {"id": "chair_1", "kind": "furniture", "display_name": "Cozy Chair", "furniture_type": "chair"},
+    {"id": "paint_red", "kind": "skin", "display_name": "Red Camper Skin"},
+    {"id": "postcard_1", "kind": "collection", "display_name": "Forest Postcard"}
+  ]
+}

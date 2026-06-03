@@ -1,0 +1,17 @@
+{
+  "normal": [
+    {"id": "n1", "text": "Drink a glass of water"},
+    {"id": "n2", "text": "Do 5 stretches"},
+    {"id": "n3", "text": "Take deep breaths for 1 minute"},
+    {"id": "n4", "text": "Clean your desk for 2 minutes"},
+    {"id": "n5", "text": "Write down a happy thing today"},
+    {"id": "n6", "text": "Rest your eyes for 3 minutes"},
+    {"id": "n7", "text": "Walk around for 2 minutes"}
+  ],
+  "advanced": [
+    {"id": "a1", "text": "Do exercise for 10 minutes"},
+    {"id": "a2", "text": "Read a book for 15 minutes"},
+    {"id": "a3", "text": "Meditate for 10 minutes"},
+    {"id": "a4", "text": "Clean a room zone"}
+  ]
+}

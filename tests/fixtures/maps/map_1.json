@@ -1,0 +1,62 @@
+{
+  "id": "map_1",
+  "name": "Mist Forest",
+  "world": "overworld",
+  "region": "forest",
+  "resource_bias": "wood",
+  "start_tile": "tile_start",
+  "tiles": [
+    {
+      "id": "tile_start",
+      "position": [0, 0],
+      "neighbors": ["tile_discovery"],
+      "cost": 0,
+      "type": "start"
+    },
+    {
+      "id": "tile_discovery",
+      "position": [1, 0],
+      "neighbors": ["tile_start", "tile_resource"],
+      "cost": 1,
+      "type": "discovery",
+      "rewards": {"wood": 2},
+      "text": "You found some wood logs!"
+    },
+    {
+      "id": "tile_resource",
+      "position": [2, 0],
+      "neighbors": ["tile_discovery", "tile_event", "tile_blocked"],
+      "cost": 2,
+      "type": "resource_point",
+      "first_rewards": {"stone": 5},
+      "collect_rewards": {"stone": 2}
+    },
+    {
+      "id": "tile_blocked",
+      "position": [2, 1],
+      "neighbors": ["tile_resource", "tile_exit"],
+      "cost": 1,
+      "type": "decor",
+      "reward_id": "chair_1",
+      "requirements": [
+        {"type": "item", "id": "door_key", "count": 1}
+      ]
+    },
+    {
+      "id": "tile_event",
+      "position": [3, 0],
+      "neighbors": ["tile_resource"],
+      "cost": 1,
+      "type": "event",
+      "event_id": "evt_01"
+    },
+    {
+      "id": "tile_exit",
+      "position": [3, 1],
+      "neighbors": ["tile_blocked"],
+      "cost": 3,
+      "type": "exit",
+      "target_maps": ["map_2"]
+    }
+  ]
+}
