@@ -6,7 +6,7 @@
 
 ## 世界 / 地圖名單（本版 first pass）
 
-| # | map_id（提案） | 名稱 | 世界 | 結構 | resource_bias |
+| # | map_id | 名稱 | 世界 | 結構 | resource_bias |
 |---|---|---|---|---|---|
 | 1 | `map_taichi_start` | 靜止霧區 | overworld（大千） | 單線 3 格：起點→中段→出口，出口通雨醒林 | 無（教學） |
 | 2 | `map_taichi_forest` | 雨醒林 | overworld 正式① | 走格探索 | wood（木材） |
@@ -15,7 +15,7 @@
 | 5 | `map_second_crystal_valley` | 微光晶谷 | second_world① | 走格探索（主採集） | crystal（晶石・量多） |
 | 6 | `map_second_moon_library` | 月影書庭 | second_world② | 走格探索（敘事終點） | crystal（晶石・量少） |
 
-> map_id 為提案；確切 slug 與 tile 座標生成規則由實作者於開工時定（`開發設計方針.md §8.5`）。
+> map_id 已對齊 `data/maps/` 實際 slug；tile 座標生成規則由實作者於開工時定（`開發設計方針.md §8.5`）。
 
 ## 三封信（教學階梯）
 

@@ -10,7 +10,7 @@
 | id | `map_taichi_stonehills` |
 | name | 眠石丘 |
 | world | overworld（大千 正式區②） |
-| region | stone_hill |
+| region | stonehills |
 | resource_bias | stone（石材） |
 
 ## 敘事定位（D4）

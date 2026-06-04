@@ -10,7 +10,7 @@
 | id | `map_taichi_far` |
 | name | 霧鈴原 |
 | world | overworld（大千 正式區③） |
-| region | bell_meadow |
+| region | meadows |
 | resource_bias | thread（織線：霧氣凝成的絨毛植物） |
 
 ## 敘事定位（D5，第三封信線索）

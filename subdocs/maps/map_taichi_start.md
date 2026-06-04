@@ -10,7 +10,7 @@
 | id | `map_taichi_start` |
 | name | 靜止霧區 |
 | world | overworld（大千） |
-| region | start_fog |
+| region | start |
 | resource_bias | 無（教學區，不主打採集） |
 
 ## 結構（已定案）
