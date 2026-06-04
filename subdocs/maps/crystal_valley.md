@@ -11,7 +11,7 @@
 | name | 微光晶谷 |
 | world | second_world（第二世界①） |
 | region | crystal_valley |
-| resource_bias | lightcrystal（光晶・**量多**，主採集區） |
+| resource_bias | crystal（晶石・**量多**，主採集區） |
 
 ## 敘事定位（D2–D3，第二封信）
 
@@ -22,7 +22,7 @@
 
 ## 含資源 / 事件
 
-- 光晶資源點（`type=resource_point`，產出 lightcrystal，**量多**）。
+- 晶石資源點（`type=resource_point`，產出 crystal，**量多**）。
 - 晶石群送達事件（`type=event`）：放信 → 延遲 → 最小晶石先亮 → 全谷亮起。
 
 ## 待實作者開工時補

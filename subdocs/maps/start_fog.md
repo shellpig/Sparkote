@@ -1,4 +1,4 @@
-# 起始霧區（start_fog）
+# 靜止霧區（start_fog）
 
 > 對應產出：`data/maps/start_fog.json`。Schema 沿用 `開發設計方針.md §5.1` / fixture `tests/fixtures/maps/map_1.json`。
 > 逐日定位見 `subdocs/gate_d1_d7.md`（D1 開局）。
@@ -8,7 +8,7 @@
 | 欄位 | 值 |
 |---|---|
 | id | `start_fog`（提案） |
-| name | 起始霧區 |
+| name | 靜止霧區 |
 | world | overworld（大千） |
 | region | start_fog |
 | resource_bias | 無（教學區，不主打採集） |

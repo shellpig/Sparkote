@@ -11,7 +11,7 @@
 | name | 月影書庭 |
 | world | second_world（第二世界②） |
 | region | moon_library |
-| resource_bias | lightcrystal（光晶・**量少**，敘事終點為主，點綴採集） |
+| resource_bias | crystal（晶石・**量少**，敘事終點為主，點綴採集） |
 
 ## 敘事定位（D6–D7，第三封信）
 
@@ -22,7 +22,7 @@
 
 ## 含資源 / 事件
 
-- 光晶資源點（`type=resource_point`，產出 lightcrystal，**量少**）。
+- 晶石資源點（`type=resource_point`，產出 crystal，**量少**）。
 - 第三封信送達事件（`type=event`）：放信 → 延遲 → 那一頁亮起 → 連動霧鈴原斷橋接回。
 
 ## 待實作者開工時補
