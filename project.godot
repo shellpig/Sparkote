@@ -29,7 +29,6 @@ Exploration="*res://scripts/systems/exploration.gd"
 HomeSystem="*res://scripts/systems/home_system.gd"
 ResourcePoint="*res://scripts/systems/resource_point.gd"
 
-
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/gut/plugin.cfg")

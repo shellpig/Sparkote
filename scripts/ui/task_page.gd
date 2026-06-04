@@ -74,6 +74,10 @@ func _populate_candidates() -> void:
 		if not is_completed:
 			var select_btn = Button.new()
 			select_btn.text = "Deselect" if is_selected else "Select"
+			select_btn.add_theme_color_override("font_color", Color.YELLOW)
+			select_btn.add_theme_color_override("font_hover_color", Color.YELLOW)
+			select_btn.add_theme_color_override("font_pressed_color", Color.YELLOW)
+			select_btn.add_theme_color_override("font_focus_color", Color.YELLOW)
 			select_btn.pressed.connect(func():
 				if is_selected:
 					GameState.unchoose_task(task_id, false)
@@ -85,6 +89,10 @@ func _populate_candidates() -> void:
 			if is_selected:
 				var complete_btn = Button.new()
 				complete_btn.text = "Complete"
+				complete_btn.add_theme_color_override("font_color", Color.YELLOW)
+				complete_btn.add_theme_color_override("font_hover_color", Color.YELLOW)
+				complete_btn.add_theme_color_override("font_pressed_color", Color.YELLOW)
+				complete_btn.add_theme_color_override("font_focus_color", Color.YELLOW)
 				complete_btn.pressed.connect(func():
 					TaskSystem.complete_task(task_id)
 				)
@@ -112,6 +120,10 @@ func _populate_candidates() -> void:
 		if not is_completed:
 			var select_btn = Button.new()
 			select_btn.text = "Deselect" if is_selected else "Select"
+			select_btn.add_theme_color_override("font_color", Color.YELLOW)
+			select_btn.add_theme_color_override("font_hover_color", Color.YELLOW)
+			select_btn.add_theme_color_override("font_pressed_color", Color.YELLOW)
+			select_btn.add_theme_color_override("font_focus_color", Color.YELLOW)
 			select_btn.pressed.connect(func():
 				if is_selected:
 					# Extra advanced can't be deselected in first version or can be? Let's allow unchoose
@@ -133,6 +145,10 @@ func _populate_candidates() -> void:
 			if is_selected:
 				var complete_btn = Button.new()
 				complete_btn.text = "Complete"
+				complete_btn.add_theme_color_override("font_color", Color.YELLOW)
+				complete_btn.add_theme_color_override("font_hover_color", Color.YELLOW)
+				complete_btn.add_theme_color_override("font_pressed_color", Color.YELLOW)
+				complete_btn.add_theme_color_override("font_focus_color", Color.YELLOW)
 				complete_btn.pressed.connect(func():
 					TaskSystem.complete_task(task_id)
 				)

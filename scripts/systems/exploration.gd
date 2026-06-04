@@ -3,9 +3,12 @@ extends Node
 var current_map_id: String = ""
 
 func _ready() -> void:
-	# If no maps are unlocked, unlock "map_1" as the starting map
+	# If no maps are unlocked, unlock the correct starting map
 	if GameState.unlocked_maps.is_empty():
-		unlock_map("map_1")
+		if not Content.get_map("map_taichi_start").is_empty():
+			unlock_map("map_taichi_start")
+		else:
+			unlock_map("map_1")
 	
 	# Set default current map
 	if current_map_id.is_empty() and not GameState.unlocked_maps.is_empty():
@@ -130,6 +133,9 @@ func set_current_map(map_id: String) -> void:
 		current_map_id = map_id
 
 func get_current_map() -> String:
+	if current_map_id.is_empty() or not GameState.is_map_unlocked(current_map_id):
+		if not GameState.unlocked_maps.is_empty():
+			current_map_id = GameState.unlocked_maps[0]
 	return current_map_id
 
 func get_map_view(map_id: String) -> Dictionary:
