@@ -16,6 +16,13 @@ func _ready() -> void:
 	map_switcher.item_selected.connect(_on_map_selected)
 	map_board.draw.connect(_on_map_board_draw)
 	
+	# Create Energy Label dynamically
+	var energy_label = Label.new()
+	energy_label.name = "EnergyLabel"
+	$VBoxContainer/Header.add_child(energy_label)
+	
+	UINavigation.overlay_closed.connect(_on_overlay_closed)
+	
 	_on_state_changed()
 
 func _on_state_changed(_v = null, _v2 = null) -> void:
@@ -31,7 +38,14 @@ func _on_state_changed(_v = null, _v2 = null) -> void:
 		return
 		
 	# Update Title
-	map_title.text = "Map: %s" % view.get("name", cur_map)
+	map_title.text = "地圖: %s" % view.get("name", cur_map)
+	
+	# Update energy display
+	var energy_lbl = $VBoxContainer/Header.get_node_or_null("EnergyLabel")
+	if energy_lbl:
+		var energy = GameState.get_energy()
+		var cap = Config.get_energy_cap()
+		energy_lbl.text = "能量: %d/%d" % [energy, cap]
 	
 	# Update map switcher dropdown
 	map_switcher.clear()
@@ -59,7 +73,7 @@ func _on_map_selected(idx: int) -> void:
 	var m_id = map_switcher.get_item_metadata(idx)
 	Exploration.set_current_map(m_id)
 	selected_tile_id = ""
-	detail_label.text = "Click a node to view info."
+	detail_label.text = "請點擊節點以查看資訊。"
 	_on_state_changed()
 
 func _get_screen_position(grid_pos: Array) -> Vector2:
@@ -85,22 +99,45 @@ func _populate_nodes(view: Dictionary) -> void:
 		
 		# Define button
 		var btn = Button.new()
-		btn.custom_minimum_size = Vector2(140, 50)
+		btn.custom_minimum_size = Vector2(140, 70)
 		
 		# Set text and theme color
 		if is_revealed:
-			btn.text = "%s\n[%s]" % [tile_id, type.capitalize()]
+			var display_text = ""
+			match type:
+				"start":
+					display_text = "起點"
+				"exit":
+					display_text = "出口"
+				"resource_point":
+					display_text = "資源點"
+				"decor":
+					var item_data = Content.get_item(tile.get("reward_id", ""))
+					display_text = item_data.get("display_name", "裝飾")
+				"event":
+					var evt_data = Content.get_event(tile.get("event_id", ""))
+					display_text = evt_data.get("title", "事件")
+				"discovery":
+					display_text = "已探索"
+				_:
+					display_text = type.capitalize()
+			
+			var tile_name = tile.get("name", "")
+			if tile_name.is_empty():
+				tile_name = display_text
+				
+			btn.text = "%s\n%s" % [tile_id, tile_name]
 			btn.modulate = Color(0.6, 0.9, 0.6) # Greenish for revealed
 		elif is_blocked:
-			btn.text = "%s\n🔒 (Cost: %d)" % [tile_id, cost]
+			btn.text = "%s\n被迷霧壟罩\n🔒 (消耗: %d)" % [tile_id, cost]
 			btn.modulate = Color(0.9, 0.5, 0.5) # Reddish for blocked
 		else:
-			btn.text = "%s\n? (Cost: %d)" % [tile_id, cost]
+			btn.text = "%s\n被迷霧壟罩\n? (消耗: %d)" % [tile_id, cost]
 			btn.modulate = Color(0.5, 0.7, 0.9) # Bluish/yellowish for selectable
 			
 		# Position button centered on grid screen coordinate
 		var center_pos = _get_screen_position(tile.get("position", [0, 0]))
-		btn.position = center_pos - Vector2(70, 25)
+		btn.position = center_pos - Vector2(70, 35)
 		
 		# Bind press
 		btn.pressed.connect(func(): _on_tile_pressed(cur_map, tile))
@@ -109,6 +146,7 @@ func _populate_nodes(view: Dictionary) -> void:
 
 func _on_tile_pressed(map_id: String, tile: Dictionary) -> void:
 	var tile_id = tile.get("id")
+	var is_double_click = (selected_tile_id == tile_id)
 	selected_tile_id = tile_id
 	var is_revealed = tile.get("revealed", false)
 	var is_selectable = tile.get("selectable", false)
@@ -116,46 +154,140 @@ func _on_tile_pressed(map_id: String, tile: Dictionary) -> void:
 	var cost = tile.get("cost", 0)
 	var type = tile.get("type", "")
 	
-	var info = "Tile: %s\nType: %s (Cost: %d)\nStatus: " % [tile_id, type.capitalize(), cost]
+	var ch_type = ""
+	match type:
+		"start": ch_type = "起點"
+		"exit": ch_type = "出口"
+		"resource_point": ch_type = "資源點"
+		"decor": ch_type = "裝飾"
+		"event": ch_type = "事件"
+		"discovery": ch_type = "探索"
+		_: ch_type = type.capitalize()
+
+	var tile_name = tile.get("name", "")
+	if tile_name.is_empty():
+		tile_name = ch_type
+	var label_title = "%s / %s" % [tile_id, tile_name]
+	
+	var info = "格子: %s\n類型: %s (消耗: %d)\n狀態: " % [label_title, ch_type, cost]
 	if is_revealed:
-		info += "Revealed"
+		info += "已翻開"
 		match type:
 			"discovery":
-				info += "\nFound: %s" % JSON.stringify(tile.get("rewards", {}))
+				info += "\n獲得發現: %s" % _format_rewards(tile.get("rewards", {}))
+				var txt = tile.get("text", "")
+				if not txt.is_empty():
+					info += "\n描述: \"%s\"" % txt
 			"resource_point":
-				info += "\nResource Point (First: %s, Repeat: %s)" % [
-					JSON.stringify(tile.get("first_rewards", {})),
-					JSON.stringify(tile.get("collect_rewards", {}))
+				info += "\n資源點 (首採: %s, 重採: %s)" % [
+					_format_rewards(tile.get("first_rewards", {})),
+					_format_rewards(tile.get("collect_rewards", {}))
 				]
 			"decor":
-				info += "\nGrants furniture: %s" % tile.get("reward_id", "")
+				var item_data = Content.get_item(tile.get("reward_id", ""))
+				info += "\n獲得家具: %s" % item_data.get("display_name", tile.get("reward_id", ""))
 			"exit":
-				info += "\nExit to map(s): %s" % JSON.stringify(tile.get("target_maps", []))
+				var target_maps = tile.get("target_maps", [])
+				var names = []
+				for t_map_id in target_maps:
+					var m_data = Content.get_map(t_map_id)
+					names.append(m_data.get("name", t_map_id))
+				info += "\n通往地圖: %s" % ", ".join(names)
 			"event":
-				info += "\nCompleted Event: %s" % tile.get("event_id", "")
+				var evt_data = Content.get_event(tile.get("event_id", ""))
+				info += "\n觸發事件: 「%s」" % evt_data.get("title", tile.get("event_id", ""))
 	elif is_blocked:
-		info += "Blocked by unmet requirements: "
+		info += "未解鎖 (被未滿足的條件阻擋)"
 		var unmet = tile.get("unmet_requirements", [])
 		var unmet_desc = []
 		for u in unmet:
-			unmet_desc.append("%s:%s" % [u.get("type"), u.get("id")])
-		info += ", ".join(unmet_desc)
+			unmet_desc.append(_format_requirement(u))
+		info += "\n需要滿足：\n- " + "\n- ".join(unmet_desc)
 	else:
-		info += "Selectable (Click below to flip)"
+		info += "可開拓 (再次點擊以開拓)"
 		
 	detail_label.text = info
 	
 	# If selectable, show a button or prompt to flip
 	if is_selectable and not is_revealed:
-		# Add a temporary quick-flip action inside detail label
-		detail_label.text += "\n[Press again or click button below to FLIP]"
+		detail_label.text += "\n[再次點擊以進行開拓]"
 		var outcome = Exploration.flip_tile(map_id, tile_id)
 		if outcome.get("ok", false):
 			selected_tile_id = ""
 			_on_state_changed()
-			detail_label.text = "Flipped %s successfully! Outcome: %s" % [tile_id, outcome.get("type")]
+			
+			var ch_outcome_type = ""
+			match outcome.get("type"):
+				"start": ch_outcome_type = "起點"
+				"exit": ch_outcome_type = "出口"
+				"resource_point": ch_outcome_type = "資源點"
+				"decor": ch_outcome_type = "裝飾"
+				"event": ch_outcome_type = "事件"
+				"discovery": ch_outcome_type = "探索"
+				_: ch_outcome_type = str(outcome.get("type"))
+			
+			detail_label.text = "成功開拓 %s！結果：%s" % [label_title, ch_outcome_type]
 		else:
-			detail_label.text += "\nFlip failed: %s" % outcome.get("reason", "")
+			detail_label.text += "\n開拓失敗：%s" % outcome.get("reason", "")
+	elif is_revealed and type == "exit":
+		detail_label.text += "\n[再次點擊以穿梭至此地圖]"
+		if is_double_click:
+			var target_maps = tile.get("target_maps", [])
+			if not target_maps.is_empty():
+				var target = target_maps[0]
+				Exploration.set_current_map(target)
+				selected_tile_id = ""
+				detail_label.text = "請點擊節點以查看資訊。"
+				_on_state_changed()
+
+func _on_overlay_closed() -> void:
+	if not Exploration.pending_exit_map_id.is_empty():
+		var target = Exploration.pending_exit_map_id
+		Exploration.pending_exit_map_id = ""
+		Exploration.set_current_map(target)
+		selected_tile_id = ""
+		detail_label.text = "請點擊節點以查看資訊。"
+		_on_state_changed()
+
+func _format_rewards(rewards: Dictionary) -> String:
+	if rewards.is_empty():
+		return "無"
+	var parts = []
+	for item_id in rewards:
+		var metadata = Content.get_item(item_id)
+		var display_name = metadata.get("display_name", item_id)
+		parts.append("%s x%d" % [display_name, int(rewards[item_id])])
+	return ", ".join(parts)
+
+func _format_requirement(req: Dictionary) -> String:
+	var type = req.get("type", "")
+	var req_id = req.get("id", "")
+	match type:
+		"item", "resource":
+			var count = int(req.get("count", 1))
+			var item_data = Content.get_item(req_id)
+			var item_name = item_data.get("display_name", req_id)
+			return "持有 %s x%d" % [item_name, count]
+		"event":
+			var evt_data = Content.get_event(req_id)
+			var evt_title = evt_data.get("title", req_id)
+			return "完成事件「%s」" % [evt_title]
+		"map":
+			var map_data = Content.get_map(req_id)
+			var map_name = map_data.get("name", req_id)
+			return "解鎖地圖「%s」" % [map_name]
+		"repair":
+			var level = int(req.get("level", 1))
+			var repair_name = req_id
+			for r in Content.get_home_repairs():
+				if r.get("id") == req_id:
+					match req_id:
+						"repair_engine": repair_name = "修復引擎"
+						"repair_window": repair_name = "修復車窗"
+						"repair_mailbox": repair_name = "修復郵箱"
+			return "%s 達到等級 %d" % [repair_name, level]
+		_:
+			return "%s:%s" % [type, req_id]
 
 func _on_map_board_draw() -> void:
 	var cur_map = Exploration.get_current_map()

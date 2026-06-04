@@ -8,25 +8,29 @@
   "tiles": [
     {
       "id": "t0s_start",
+      "name": "起點",
       "position": [0, 0],
-      "neighbors": ["t0s_mailbox", "t0s_exit"],
+      "neighbors": ["t0s_mailbox"],
       "cost": 0,
       "type": "start"
     },
     {
       "id": "t0s_mailbox",
+      "name": "郵筒",
       "position": [1, 0],
-      "neighbors": ["t0s_start"],
+      "neighbors": ["t0s_start", "t0s_exit"],
       "cost": 1,
       "type": "event",
       "event_id": "evt_find_rain_letter"
     },
     {
       "id": "t0s_exit",
-      "position": [0, 1],
-      "neighbors": ["t0s_start"],
+      "name": "出口",
+      "position": [2, 0],
+      "neighbors": ["t0s_mailbox"],
       "cost": 1,
       "type": "exit",
+      "event_id": "evt_exit_taichi_start",
       "target_maps": ["map_taichi_forest"]
     }
   ]

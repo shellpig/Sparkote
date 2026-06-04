@@ -176,37 +176,56 @@ func test_forking_choices_and_bypassing():
 	assert_true(GameState.is_tile_revealed("map_1", "tile_blocked"))
 
 func test_get_map_view_fog_rule():
-	# Initially, map_1 only has tile_start revealed.
-	# Neighbors of tile_start is tile_discovery.
-	# So only tile_start (revealed) and tile_discovery (adjacent/selectable) should be visible.
-	# All other tiles (tile_resource, tile_blocked, tile_event, tile_exit) should be hidden by fog.
+	# Give energy so selectable tiles check passes
+	GameState.add_energy(10)
+	
+	# All tiles should be visible on the board, but fogged tiles are unrevealed/unselectable
 	var view = Exploration.get_map_view("map_1")
 	assert_eq(view.get("id"), "map_1")
 	
-	var visible_tiles = view.get("tiles", [])
-	assert_eq(visible_tiles.size(), 2)
+	var tiles = view.get("tiles", [])
+	assert_eq(tiles.size(), 6) # All 6 tiles of map_1 are returned
 	
-	var visible_ids = []
-	for t in visible_tiles:
-		visible_ids.append(t.get("id"))
-		
-	assert_true("tile_start" in visible_ids)
-	assert_true("tile_discovery" in visible_ids)
-	assert_false("tile_resource" in visible_ids)
+	var tile_start = null
+	var tile_discovery = null
+	var tile_resource = null
+	for t in tiles:
+		if t.get("id") == "tile_start":
+			tile_start = t
+		elif t.get("id") == "tile_discovery":
+			tile_discovery = t
+		elif t.get("id") == "tile_resource":
+			tile_resource = t
+			
+	assert_not_null(tile_start)
+	assert_not_null(tile_discovery)
+	assert_not_null(tile_resource)
 	
-	# Now flip tile_discovery. tile_resource should become visible.
-	GameState.add_energy(5)
-	Exploration.flip_tile("map_1", "tile_discovery")
+	# Start tile is revealed, discovery tile is selectable
+	assert_true(tile_start.get("revealed"))
+	assert_false(tile_discovery.get("revealed"))
+	assert_true(tile_discovery.get("selectable"))
+	
+	# Resource tile is too far away (not adjacent to revealed) so it is blocked & not selectable
+	assert_false(tile_resource.get("revealed"))
+	assert_false(tile_resource.get("selectable"))
+	assert_true(tile_resource.get("blocked"))
+	
+	# Now flip tile_discovery. tile_resource should become selectable.
+	var outcome = Exploration.flip_tile("map_1", "tile_discovery")
+	assert_true(outcome.get("ok"))
 	
 	var view_after = Exploration.get_map_view("map_1")
-	var visible_tiles_after = view_after.get("tiles", [])
-	assert_eq(visible_tiles_after.size(), 3)
+	var tiles_after = view_after.get("tiles", [])
 	
-	var visible_ids_after = []
-	for t in visible_tiles_after:
-		visible_ids_after.append(t.get("id"))
-		
-	assert_true("tile_start" in visible_ids_after)
-	assert_true("tile_discovery" in visible_ids_after)
-	assert_true("tile_resource" in visible_ids_after)
-	assert_false("tile_blocked" in visible_ids_after)
+	var tile_discovery_after = null
+	var tile_resource_after = null
+	for t in tiles_after:
+		if t.get("id") == "tile_discovery":
+			tile_discovery_after = t
+		elif t.get("id") == "tile_resource":
+			tile_resource_after = t
+			
+	assert_true(tile_discovery_after.get("revealed"))
+	assert_false(tile_resource_after.get("revealed"))
+	assert_true(tile_resource_after.get("selectable")) # Now selectable since tile_discovery is revealed

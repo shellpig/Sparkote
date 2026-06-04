@@ -1,6 +1,7 @@
 extends Node
 
 var current_map_id: String = ""
+var pending_exit_map_id: String = ""
 
 func _ready() -> void:
 	# If no maps are unlocked, unlock the correct starting map
@@ -111,6 +112,14 @@ func flip_tile(map_id: String, tile_id: String) -> Dictionary:
 			for t_map_id in target_maps:
 				unlock_map(t_map_id)
 			outcome["unlocked_maps"] = target_maps
+			if not target_maps.is_empty():
+				pending_exit_map_id = target_maps[0]
+			var event_id = target_tile.get("event_id", "")
+			if event_id.is_empty():
+				event_id = "evt_exit_generic"
+			outcome["event_id"] = event_id
+			if not Content.get_event(event_id).is_empty():
+				EventSystem.play(event_id)
 		"event":
 			var event_id = target_tile.get("event_id", "")
 			outcome["event_id"] = event_id
@@ -151,8 +160,8 @@ func get_map_view(map_id: String) -> Dictionary:
 		var is_revealed = GameState.is_tile_revealed(map_id, tile_id)
 		var is_adjacent = GameState.is_adjacent_to_revealed(map_id, tile_id)
 
-		# Only visible (revealed or adjacent to revealed) tiles are returned
-		if is_revealed or is_adjacent:
+		# Show all tiles so fogged/unrevealed ones are visible on the board
+		if true:
 			var reqs = tile.get("requirements", [])
 			var unmet = GameState.unmet_requirements(reqs)
 			var check = can_flip(map_id, tile_id)
@@ -164,7 +173,7 @@ func get_map_view(map_id: String) -> Dictionary:
 				"cost": int(tile.get("cost", 0)),
 				"revealed": is_revealed,
 				"selectable": check.get("ok", false),
-				"blocked": not unmet.is_empty(),
+				"blocked": not unmet.is_empty() or (not is_revealed and not is_adjacent),
 				"reason": check.get("reason", ""),
 				"requirements": reqs,
 				"unmet_requirements": unmet,
