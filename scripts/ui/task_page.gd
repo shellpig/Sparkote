@@ -4,6 +4,8 @@ extends Control
 @onready var warning_label: Label = $VBoxContainer/Header/WarningLabel
 @onready var normal_container: VBoxContainer = $VBoxContainer/NormalCandidates
 @onready var advanced_container: VBoxContainer = $VBoxContainer/AdvancedCandidates
+@onready var normal_label: Label = $VBoxContainer/NormalCandidatesLabel
+@onready var advanced_label: Label = $VBoxContainer/AdvancedCandidatesLabel
 @onready var super_task_button: Button = $VBoxContainer/Footer/SuperTaskButton
 @onready var super_credits_label: Label = $VBoxContainer/Footer/SuperCreditsLabel
 @onready var ad_button: Button = $VBoxContainer/Footer/AdButton
@@ -47,6 +49,17 @@ func _on_state_changed(_v = null) -> void:
 	# Update ad button
 	ad_button.disabled = GameState.daily_ad_extra_claimed
 
+	# Update candidate section headers with selected/limit counts
+	var norm_selected = GameState.today_selected.get("normal", [])
+	var norm_limit = Config.get_daily_slots("normal")
+	normal_label.text = "--- Normal Tasks Candidates (%d/%d) ---" % [norm_selected.size(), norm_limit]
+	
+	var adv_selected = GameState.today_selected.get("advanced", [])
+	var adv_limit = Config.get_daily_slots("advanced")
+	if GameState.daily_ad_extra_claimed:
+		adv_limit += 1
+	advanced_label.text = "--- Advanced Tasks Candidates (%d/%d) ---" % [adv_selected.size(), adv_limit]
+
 	# Re-populate candidates
 	_populate_candidates()
 
@@ -60,6 +73,9 @@ func _populate_candidates() -> void:
 	# Normal candidates
 	var norm_candidates = GameState.today_candidates.get("normal", [])
 	var norm_selected = GameState.today_selected.get("normal", [])
+	var norm_limit = Config.get_daily_slots("normal")
+	var norm_full = norm_selected.size() >= norm_limit
+	
 	for task_id in norm_candidates:
 		var task_data = Content.get_task(task_id)
 		var text = task_data.get("text", task_id)
@@ -74,10 +90,18 @@ func _populate_candidates() -> void:
 		if not is_completed:
 			var select_btn = Button.new()
 			select_btn.text = "Deselect" if is_selected else "Select"
-			select_btn.add_theme_color_override("font_color", Color.YELLOW)
-			select_btn.add_theme_color_override("font_hover_color", Color.YELLOW)
-			select_btn.add_theme_color_override("font_pressed_color", Color.YELLOW)
-			select_btn.add_theme_color_override("font_focus_color", Color.YELLOW)
+			
+			var btn_color = Color.YELLOW
+			if not is_selected and norm_full:
+				btn_color = Color.GRAY
+				select_btn.disabled = true
+				
+			select_btn.add_theme_color_override("font_color", btn_color)
+			select_btn.add_theme_color_override("font_hover_color", btn_color)
+			select_btn.add_theme_color_override("font_pressed_color", btn_color)
+			select_btn.add_theme_color_override("font_focus_color", btn_color)
+			select_btn.add_theme_color_override("font_disabled_color", Color.GRAY)
+			
 			select_btn.pressed.connect(func():
 				if is_selected:
 					GameState.unchoose_task(task_id, false)
@@ -104,11 +128,15 @@ func _populate_candidates() -> void:
 	var adv_candidates = GameState.today_candidates.get("advanced", [])
 	var adv_selected = GameState.today_selected.get("advanced", [])
 	var extra_advanced = GameState.today_selected.get("extra_advanced", "")
+	var adv_limit = Config.get_daily_slots("advanced")
+	if GameState.daily_ad_extra_claimed:
+		adv_limit += 1
+	var adv_full = adv_selected.size() >= adv_limit
 	
 	for task_id in adv_candidates:
 		var task_data = Content.get_task(task_id)
 		var text = task_data.get("text", task_id)
-		var is_selected = (task_id in adv_selected) or (task_id == extra_advanced and not extra_advanced.is_empty())
+		var is_selected = task_id in adv_selected
 		var is_extra = task_id == extra_advanced
 		var is_completed = GameState.is_task_completed(task_id)
 		
@@ -120,26 +148,21 @@ func _populate_candidates() -> void:
 		if not is_completed:
 			var select_btn = Button.new()
 			select_btn.text = "Deselect" if is_selected else "Select"
-			select_btn.add_theme_color_override("font_color", Color.YELLOW)
-			select_btn.add_theme_color_override("font_hover_color", Color.YELLOW)
-			select_btn.add_theme_color_override("font_pressed_color", Color.YELLOW)
-			select_btn.add_theme_color_override("font_focus_color", Color.YELLOW)
-			select_btn.pressed.connect(func():
-				if is_selected:
-					# Extra advanced can't be deselected in first version or can be? Let's allow unchoose
-					if is_extra:
-						GameState.set_extra_advanced("")
-					else:
-						GameState.unchoose_task(task_id, true)
-				else:
-					if is_extra:
-						GameState.set_extra_advanced(task_id)
-					else:
-						GameState.choose_task(task_id, true)
-			)
-			# If daily normal advanced cap reached, disable advanced select button (unless it is extra advanced)
-			if not is_selected and not is_extra and adv_selected.size() >= Config.get_daily_slots("advanced"):
+			
+			var btn_color = Color.YELLOW
+			if not is_selected and adv_full:
+				btn_color = Color.GRAY
 				select_btn.disabled = true
+				
+			select_btn.add_theme_color_override("font_color", btn_color)
+			select_btn.add_theme_color_override("font_hover_color", btn_color)
+			select_btn.add_theme_color_override("font_pressed_color", btn_color)
+			select_btn.add_theme_color_override("font_focus_color", btn_color)
+			select_btn.add_theme_color_override("font_disabled_color", Color.GRAY)
+			
+			select_btn.pressed.connect(func():
+				GameState.unchoose_task(task_id, true) if is_selected else GameState.choose_task(task_id, true)
+			)
 			hbox.add_child(select_btn)
 			
 			if is_selected:

@@ -195,6 +195,8 @@ func choose_task(task_id: String, is_advanced: bool) -> bool:
 	var slot_type = "advanced" if is_advanced else "normal"
 	var current_selected = today_selected[slot_type]
 	var limit = Config.get_daily_slots(slot_type)
+	if is_advanced and daily_ad_extra_claimed:
+		limit += 1
 	if current_selected.size() >= limit:
 		return false
 	if not (task_id in current_selected):

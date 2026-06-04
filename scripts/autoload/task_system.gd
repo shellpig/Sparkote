@@ -134,8 +134,9 @@ func _on_ad_success() -> void:
 			unselected.append(t_id)
 
 	if not unselected.is_empty():
-		GameState.set_extra_advanced(unselected[0])
 		GameState.mark_daily_ad_extra_claimed()
+		GameState.set_extra_advanced(unselected[0])
+		GameState.choose_task(unselected[0], true)
 	else:
 		printerr("TaskSystem: No unselected advanced candidates available to unlock.")
 
