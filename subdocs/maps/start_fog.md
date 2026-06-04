@@ -1,13 +1,13 @@
-# 靜止霧區（start_fog）
+# 靜止霧區（map_taichi_start）
 
-> 對應產出：`data/maps/start_fog.json`。Schema 沿用 `開發設計方針.md §5.1` / fixture `tests/fixtures/maps/map_1.json`。
+> 對應產出：`data/maps/map_taichi_start.json`。Schema 沿用 `開發設計方針.md §5.1` / fixture `tests/fixtures/maps/map_1.json`。
 > 逐日定位見 `subdocs/gate_d1_d7.md`（D1 開局）。
 
 ## 定案
 
 | 欄位 | 值 |
 |---|---|
-| id | `start_fog`（提案） |
+| id | `map_taichi_start` |
 | name | 靜止霧區 |
 | world | overworld（大千） |
 | region | start_fog |
@@ -17,7 +17,7 @@
 
 - **單線 3 格**：起點 → 中段 → 出口，共 3 格（含起點與出口）。
 - 起點＝蕾拉醒來的靜止濃霧灰格（露營車停駐、引擎無法啟動）。
-- 出口 tile：`type=exit`，`target_maps=["woke_forest"]`，通往雨醒林。
+- 出口 tile：`type=exit`，`target_maps=["map_taichi_forest"]`，通往雨醒林。
 - 中段格作為最小教學步（移動 / 翻格示範）。
 
 ## 敘事定位

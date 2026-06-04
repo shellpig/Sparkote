@@ -1,13 +1,13 @@
-# 霧鈴原（bell_meadow）
+# 霧鈴原（map_taichi_far）
 
-> 對應產出：`data/maps/bell_meadow.json`。Schema 見 `開發設計方針.md §5.1`。
+> 對應產出：`data/maps/map_taichi_far.json`。Schema 見 `開發設計方針.md §5.1`。
 > 逐日定位見 `subdocs/gate_d1_d7.md`（D5 第三封信線索）。
 
 ## 定案
 
 | 欄位 | 值 |
 |---|---|
-| id | `bell_meadow`（提案） |
+| id | `map_taichi_far` |
 | name | 霧鈴原 |
 | world | overworld（大千 正式區③） |
 | region | bell_meadow |

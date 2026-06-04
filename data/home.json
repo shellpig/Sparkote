@@ -1,0 +1,32 @@
+{
+  "slots": [
+    {"id": "slot_window_hook", "position": [1.0, 1.0], "accepts": ["decor"]},
+    {"id": "slot_desk",        "position": [3.0, 2.0], "accepts": ["table"]},
+    {"id": "slot_wall_left",   "position": [0.5, 3.0], "accepts": ["decor", "wall"]}
+  ],
+  "repairs": [
+    {
+      "id": "repair_engine",
+      "max_level": 2,
+      "levels": [
+        {"level": 1, "cost": {"wood": 3, "stone": 2},                           "visual_state": "engine_repaired"},
+        {"level": 2, "cost": {"wood": 6, "stone": 4, "metal_fragment": 1},      "visual_state": "engine_shiny"}
+      ]
+    },
+    {
+      "id": "repair_window",
+      "max_level": 2,
+      "levels": [
+        {"level": 1, "cost": {"thread": 2, "crystal": 1},                        "visual_state": "window_clear"},
+        {"level": 2, "cost": {"thread": 4, "crystal": 2, "second_spore": 1},     "visual_state": "window_glowing"}
+      ]
+    },
+    {
+      "id": "repair_mailbox",
+      "max_level": 1,
+      "levels": [
+        {"level": 1, "cost": {"metal_fragment": 2, "stone": 1},                 "visual_state": "mailbox_fixed"}
+      ]
+    }
+  ]
+}

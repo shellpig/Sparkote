@@ -1,13 +1,13 @@
-# 雨醒林（woke_forest）
+# 雨醒林（map_taichi_forest）
 
-> 對應產出：`data/maps/woke_forest.json`。Schema 見 `開發設計方針.md §5.1`。
+> 對應產出：`data/maps/map_taichi_forest.json`。Schema 見 `開發設計方針.md §5.1`。
 > 逐日定位見 `subdocs/gate_d1_d7.md`（D1 第一封信送達地）。
 
 ## 定案
 
 | 欄位 | 值 |
 |---|---|
-| id | `woke_forest`（提案） |
+| id | `map_taichi_forest` |
 | name | 雨醒林 |
 | world | overworld（大千 正式區①） |
 | region | forest |

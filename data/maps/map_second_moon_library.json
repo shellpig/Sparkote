@@ -1,0 +1,54 @@
+{
+  "id": "map_second_moon_library",
+  "name": "月影書庭",
+  "world": "second_world",
+  "region": "moon_library",
+  "resource_bias": "crystal",
+  "start_tile": "tml_start",
+  "tiles": [
+    {
+      "id": "tml_start",
+      "position": [3, 0],
+      "neighbors": ["tml_path", "tml_resource_1"],
+      "cost": 0,
+      "type": "start"
+    },
+    {
+      "id": "tml_path",
+      "position": [2, 0],
+      "neighbors": ["tml_start", "tml_event"],
+      "cost": 1,
+      "type": "discovery",
+      "rewards": {"crystal": 1},
+      "text": "月光穿透書庭的玻璃穹頂，照亮了古老的書架。地上有亮晶晶的晶石碎片。"
+    },
+    {
+      "id": "tml_resource_1",
+      "position": [4, 0],
+      "neighbors": ["tml_start", "tml_event"],
+      "cost": 1,
+      "type": "resource_point",
+      "first_rewards": {"crystal": 2},
+      "collect_rewards": {"crystal": 1}
+    },
+    {
+      "id": "tml_event",
+      "position": [3, 1],
+      "neighbors": ["tml_path", "tml_resource_1", "tml_exit_back"],
+      "cost": 1,
+      "type": "event",
+      "event_id": "evt_third_letter_deliver",
+      "requirements": [
+        {"type": "item", "id": "lantern_letter", "count": 1}
+      ]
+    },
+    {
+      "id": "tml_exit_back",
+      "position": [3, 2],
+      "neighbors": ["tml_event"],
+      "cost": 1,
+      "type": "exit",
+      "target_maps": ["map_taichi_far"]
+    }
+  ]
+}

@@ -1,13 +1,13 @@
-# 微光晶谷（crystal_valley）
+# 微光晶谷（map_second_crystal_valley）
 
-> 對應產出：`data/maps/crystal_valley.json`。Schema 見 `開發設計方針.md §5.1`。
+> 對應產出：`data/maps/map_second_crystal_valley.json`。Schema 見 `開發設計方針.md §5.1`。
 > 逐日定位見 `subdocs/gate_d1_d7.md`（D2–D3 第二封信真收件人）。
 
 ## 定案
 
 | 欄位 | 值 |
 |---|---|
-| id | `crystal_valley`（提案） |
+| id | `map_second_crystal_valley` |
 | name | 微光晶谷 |
 | world | second_world（第二世界①） |
 | region | crystal_valley |

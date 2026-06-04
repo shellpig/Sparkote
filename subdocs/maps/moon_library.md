@@ -1,13 +1,13 @@
-# 月影書庭（moon_library）
+# 月影書庭（map_second_moon_library）
 
-> 對應產出：`data/maps/moon_library.json`。Schema 見 `開發設計方針.md §5.1`。
+> 對應產出：`data/maps/map_second_moon_library.json`。Schema 見 `開發設計方針.md §5.1`。
 > 逐日定位見 `subdocs/gate_d1_d7.md`（D6–D7 第三封信真收件人 / 一週收束）。
 
 ## 定案
 
 | 欄位 | 值 |
 |---|---|
-| id | `moon_library`（提案） |
+| id | `map_second_moon_library` |
 | name | 月影書庭 |
 | world | second_world（第二世界②） |
 | region | moon_library |

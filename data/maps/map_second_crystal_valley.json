@@ -1,0 +1,111 @@
+{
+  "id": "map_second_crystal_valley",
+  "name": "微光晶谷",
+  "world": "second_world",
+  "region": "crystal_valley",
+  "resource_bias": "crystal",
+  "start_tile": "tcv_start",
+  "tiles": [
+    {
+      "id": "tcv_start",
+      "position": [3, 0],
+      "neighbors": ["tcv_glow_1"],
+      "cost": 0,
+      "type": "start"
+    },
+    {
+      "id": "tcv_glow_1",
+      "position": [3, 1],
+      "neighbors": ["tcv_start", "tcv_main"],
+      "cost": 1,
+      "type": "event",
+      "event_id": "evt_crystal_valley_enter"
+    },
+    {
+      "id": "tcv_main",
+      "position": [3, 2],
+      "neighbors": ["tcv_glow_1", "tcv_deep_1", "tcv_deep_2"],
+      "cost": 2,
+      "type": "event",
+      "event_id": "evt_second_letter"
+    },
+    {
+      "id": "tcv_deep_1",
+      "position": [2, 2],
+      "neighbors": ["tcv_main", "tcv_resource_1"],
+      "cost": 1,
+      "type": "discovery",
+      "rewards": {"crystal": 2},
+      "text": "晶石在光照射下折射出七種顏色，每一種都很安靜。"
+    },
+    {
+      "id": "tcv_deep_2",
+      "position": [4, 2],
+      "neighbors": ["tcv_main", "tcv_glow_after", "tcv_crystal_arch"],
+      "cost": 1,
+      "type": "discovery",
+      "rewards": {"second_spore": 1},
+      "text": "晶石縫隙裡長著發光的孢子，像是晶谷自己的呼吸。"
+    },
+    {
+      "id": "tcv_resource_1",
+      "position": [2, 3],
+      "neighbors": ["tcv_deep_1", "tcv_far_1", "tcv_far_2"],
+      "cost": 1,
+      "type": "resource_point",
+      "first_rewards": {"crystal": 3, "second_spore": 1},
+      "collect_rewards": {"crystal": 1}
+    },
+    {
+      "id": "tcv_glow_after",
+      "position": [4, 3],
+      "neighbors": ["tcv_deep_2", "tcv_far_1", "tcv_far_3"],
+      "cost": 1,
+      "type": "event",
+      "event_id": "evt_crystal_glow"
+    },
+    {
+      "id": "tcv_crystal_arch",
+      "position": [5, 2],
+      "neighbors": ["tcv_deep_2", "tcv_far_2"],
+      "cost": 2,
+      "type": "decor",
+      "reward_id": "crystal_wind_chime"
+    },
+    {
+      "id": "tcv_far_1",
+      "position": [3, 3],
+      "neighbors": ["tcv_resource_1", "tcv_glow_after", "tcv_exit_back"],
+      "cost": 1,
+      "type": "discovery",
+      "rewards": {"second_spore": 1},
+      "text": "深處的晶石比入口小，但光更穩定，像是存在了很久。"
+    },
+    {
+      "id": "tcv_far_2",
+      "position": [2, 4],
+      "neighbors": ["tcv_resource_1", "tcv_crystal_arch"],
+      "cost": 1,
+      "type": "discovery",
+      "rewards": {"crystal": 1},
+      "text": "一顆半透明的晶石，裡面有氣泡，像是封存了某個瞬間。"
+    },
+    {
+      "id": "tcv_far_3",
+      "position": [4, 4],
+      "neighbors": ["tcv_glow_after", "tcv_exit_back"],
+      "cost": 1,
+      "type": "discovery",
+      "rewards": {"crystal": 1},
+      "text": "晶谷的邊緣，光開始變暗，但空氣還是涼的。"
+    },
+    {
+      "id": "tcv_exit_back",
+      "position": [3, 4],
+      "neighbors": ["tcv_far_1", "tcv_far_3"],
+      "cost": 1,
+      "type": "exit",
+      "target_maps": ["map_taichi_stonehills"]
+    }
+  ]
+}

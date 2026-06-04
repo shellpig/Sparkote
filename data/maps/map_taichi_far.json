@@ -1,0 +1,65 @@
+{
+  "id": "map_taichi_far",
+  "name": "霧鈴原",
+  "world": "taichi",
+  "region": "meadows",
+  "resource_bias": "thread",
+  "start_tile": "tfar_start",
+  "tiles": [
+    {
+      "id": "tfar_start",
+      "position": [3, 0],
+      "neighbors": ["tfar_meadow_path", "tfar_broken_bridge"],
+      "cost": 0,
+      "type": "start"
+    },
+    {
+      "id": "tfar_meadow_path",
+      "position": [2, 0],
+      "neighbors": ["tfar_start", "tfar_resource_1"],
+      "cost": 1,
+      "type": "discovery",
+      "rewards": {"thread": 1},
+      "text": "霧中有些細小的絨毛植物在隨風擺動，收集了一些織線。"
+    },
+    {
+      "id": "tfar_resource_1",
+      "position": [2, 1],
+      "neighbors": ["tfar_meadow_path", "tfar_bellflower"],
+      "cost": 1,
+      "type": "resource_point",
+      "first_rewards": {"thread": 3},
+      "collect_rewards": {"thread": 2}
+    },
+    {
+      "id": "tfar_broken_bridge",
+      "position": [3, 1],
+      "neighbors": ["tfar_start", "tfar_bellflower", "tfar_exit"],
+      "cost": 1,
+      "type": "event",
+      "event_id": "evt_meadows_bridge"
+    },
+    {
+      "id": "tfar_bellflower",
+      "position": [2, 2],
+      "neighbors": ["tfar_resource_1", "tfar_broken_bridge"],
+      "cost": 1,
+      "type": "event",
+      "event_id": "evt_meadows_bellflower",
+      "requirements": [
+        {"type": "event", "id": "evt_meadows_bridge"}
+      ]
+    },
+    {
+      "id": "tfar_exit",
+      "position": [3, 2],
+      "neighbors": ["tfar_broken_bridge"],
+      "cost": 2,
+      "type": "exit",
+      "target_maps": ["map_second_moon_library"],
+      "requirements": [
+        {"type": "event", "id": "evt_meadows_bellflower"}
+      ]
+    }
+  ]
+}

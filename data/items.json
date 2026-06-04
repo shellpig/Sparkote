@@ -1,0 +1,17 @@
+{
+  "items": [
+    {"id": "wood",             "kind": "resource",   "display_name": "木材",       "resource_tier": "basic"},
+    {"id": "stone",            "kind": "resource",   "display_name": "石頭",       "resource_tier": "basic"},
+    {"id": "thread",           "kind": "resource",   "display_name": "織線",       "resource_tier": "basic"},
+    {"id": "crystal",          "kind": "resource",   "display_name": "晶石",       "resource_tier": "basic"},
+    {"id": "metal_fragment",   "kind": "resource",   "display_name": "金屬碎片",   "resource_tier": "uncommon"},
+    {"id": "taichi_crystal",   "kind": "resource",   "display_name": "大千結晶",   "resource_tier": "specialty"},
+    {"id": "second_spore",     "kind": "resource",   "display_name": "微光孢子",   "resource_tier": "specialty"},
+    {"id": "rain_letter",      "kind": "task_item",  "display_name": "給雨聲的信"},
+    {"id": "dark_crystal",     "kind": "task_item",  "display_name": "裂晶石碎片"},
+    {"id": "lantern_letter",   "kind": "task_item",  "display_name": "給燈火的信"},
+    {"id": "rain_chime",       "kind": "furniture",  "display_name": "雨滴風鈴",   "furniture_type": "decor"},
+    {"id": "crystal_wind_chime","kind": "furniture", "display_name": "晶谷風鈴",   "furniture_type": "decor"},
+    {"id": "stone_lantern",    "kind": "furniture",  "display_name": "石丘燈籠",   "furniture_type": "decor"}
+  ]
+}

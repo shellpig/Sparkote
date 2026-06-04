@@ -35,17 +35,22 @@ const AD_EXTRA_ENERGY: int = 2  # 看廣告額外高級任務產出
 ## 基準每日收入（不含廣告、不含贈點）：2×1 + 1×2 = 4
 const BASE_INCOME_PER_DAY: int = DAILY_NORMAL_SLOTS * TASK_ENERGY_NORMAL + DAILY_ADVANCED_SLOTS * TASK_ENERGY_ADVANCED
 
-# ─── 新手贈點序列（D1–D7 緩降；Phase 2-B 真內容落定後由 gate_d1_d7 更新）
+# ─── 新手贈點序列（D1–D7 緩降；依 Phase 2-B gate_d1_d7 真實事件設計）
 ## 格式：index 0 = Day1, index 6 = Day7, index 7+ = 0（無贈點）
-## 暫定值：D1 +6, D2 +4, D3 +3, D4 +2, D5 +1, D6 +1, D7 +0 → 穩態落回 6/天
-## 注意：這只是 placeholder；2-C 閘門調參時會依 gate_d1_d7 真實事件更新這份序列
-var gift_sequence: Array = [6, 4, 3, 2, 1, 1, 0]
+## D1 +4: evt_find_rain_letter(+1) + evt_dry_pond(+1) + evt_rain_bell(+2)
+## D2 +3: evt_after_rain(+1) + evt_dark_crystal(+1) + evt_world2_whisper(+1)
+## D3 +3: evt_crystal_valley_enter(+1) + evt_second_letter(+2)
+## D4 +2: evt_crystal_glow(+1) + evt_stonehills_arrive(+1)
+## D5 +1: evt_stonehills_wind(+1)
+## D6 +0: resource_point first_rewards 不含 energy（loader 驗證限制）；D6 靠結轉通過闕門（carry≥3+income=6=avail9>=8）
+## D7+ 0: 穩態 6/天
+var gift_sequence: Array = [4, 3, 3, 2, 1, 0, 0]
 
-# ─── 每日可翻格數序列（來自 gate_d1_d7 地圖鋪法；placeholder 先用固定值）
+# ─── 每日可翻格數序列（依 Phase 2-B 地圖供給；4 圖合計 44 可翻格，支撐 D1-D7）
 ## index 0 = Day1, … 格數代表「今天最多想翻幾格」（供給上限）
 ## 規格要求 Day6 可翻 ≥ 4 為硬指標
-## Placeholder：D1=3, D2=4, D3=4, D4=5, D5=5, D6=5, D7=6（之後由 subdocs 更新）
-var tiles_per_day_seq: Array = [3, 4, 4, 5, 5, 5, 6]
+## 每日 8 格：start(2)+forest chain(6) / forest rest / crystal valley / stonehills
+var tiles_per_day_seq: Array = [8, 8, 8, 8, 8, 8, 8]
 
 # ─── 執行入口 ───────────────────────────────────────────────
 func _init() -> void:

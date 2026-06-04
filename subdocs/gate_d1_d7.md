@@ -8,12 +8,12 @@
 
 | # | map_id（提案） | 名稱 | 世界 | 結構 | resource_bias |
 |---|---|---|---|---|---|
-| 1 | `start_fog` | 靜止霧區 | overworld（大千） | 單線 3 格：起點→中段→出口，出口通雨醒林 | 無（教學） |
-| 2 | `woke_forest` | 雨醒林 | overworld 正式① | 走格探索 | wood（木材） |
-| 3 | `stone_hill` | 眠石丘 | overworld 正式② | 走格探索 | stone（石材） |
-| 4 | `bell_meadow` | 霧鈴原 | overworld 正式③ | 走格探索 | thread（織線） |
-| 5 | `crystal_valley` | 微光晶谷 | second_world① | 走格探索（主採集） | crystal（晶石・量多） |
-| 6 | `moon_library` | 月影書庭 | second_world② | 走格探索（敘事終點） | crystal（晶石・量少） |
+| 1 | `map_taichi_start` | 靜止霧區 | overworld（大千） | 單線 3 格：起點→中段→出口，出口通雨醒林 | 無（教學） |
+| 2 | `map_taichi_forest` | 雨醒林 | overworld 正式① | 走格探索 | wood（木材） |
+| 3 | `map_taichi_stonehills` | 眠石丘 | overworld 正式② | 走格探索 | stone（石材） |
+| 4 | `map_taichi_far` | 霧鈴原 | overworld 正式③ | 走格探索 | thread（織線） |
+| 5 | `map_second_crystal_valley` | 微光晶谷 | second_world① | 走格探索（主採集） | crystal（晶石・量多） |
+| 6 | `map_second_moon_library` | 月影書庭 | second_world② | 走格探索（敘事終點） | crystal（晶石・量少） |
 
 > map_id 為提案；確切 slug 與 tile 座標生成規則由實作者於開工時定（`開發設計方針.md §8.5`）。
 

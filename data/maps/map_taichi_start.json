@@ -1,0 +1,33 @@
+{
+  "id": "map_taichi_start",
+  "name": "靜止霧區",
+  "world": "taichi",
+  "region": "start",
+  "resource_bias": "none",
+  "start_tile": "t0s_start",
+  "tiles": [
+    {
+      "id": "t0s_start",
+      "position": [0, 0],
+      "neighbors": ["t0s_mailbox", "t0s_exit"],
+      "cost": 0,
+      "type": "start"
+    },
+    {
+      "id": "t0s_mailbox",
+      "position": [1, 0],
+      "neighbors": ["t0s_start"],
+      "cost": 1,
+      "type": "event",
+      "event_id": "evt_find_rain_letter"
+    },
+    {
+      "id": "t0s_exit",
+      "position": [0, 1],
+      "neighbors": ["t0s_start"],
+      "cost": 1,
+      "type": "exit",
+      "target_maps": ["map_taichi_forest"]
+    }
+  ]
+}

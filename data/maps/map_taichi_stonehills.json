@@ -1,0 +1,138 @@
+{
+  "id": "map_taichi_stonehills",
+  "name": "眠石丘",
+  "world": "taichi",
+  "region": "stonehills",
+  "resource_bias": "stone",
+  "start_tile": "tsh_start",
+  "tiles": [
+    {
+      "id": "tsh_start",
+      "position": [3, 0],
+      "neighbors": ["tsh_arrival"],
+      "cost": 0,
+      "type": "start"
+    },
+    {
+      "id": "tsh_arrival",
+      "position": [3, 1],
+      "neighbors": ["tsh_start", "tsh_wide_1", "tsh_path_1"],
+      "cost": 1,
+      "type": "event",
+      "event_id": "evt_stonehills_arrive"
+    },
+    {
+      "id": "tsh_wide_1",
+      "position": [2, 1],
+      "neighbors": ["tsh_arrival", "tsh_resource_1", "tsh_stone_arch"],
+      "cost": 1,
+      "type": "discovery",
+      "rewards": {"stone": 2},
+      "text": "石丘地面平坦，踩上去有種很踏實的聲音。"
+    },
+    {
+      "id": "tsh_path_1",
+      "position": [4, 1],
+      "neighbors": ["tsh_arrival", "tsh_metal_vein", "tsh_wind"],
+      "cost": 1,
+      "type": "discovery",
+      "rewards": {"stone": 1, "metal_fragment": 1},
+      "text": "石縫裡有閃著光的金屬，撬了一小塊出來。"
+    },
+    {
+      "id": "tsh_resource_1",
+      "position": [2, 2],
+      "neighbors": ["tsh_wide_1", "tsh_stone_arch", "tsh_deep_1"],
+      "cost": 1,
+      "type": "resource_point",
+      "first_rewards": {"stone": 3},
+      "collect_rewards": {"stone": 2}
+    },
+    {
+      "id": "tsh_stone_arch",
+      "position": [1, 2],
+      "neighbors": ["tsh_wide_1", "tsh_resource_1", "tsh_far_1"],
+      "cost": 1,
+      "type": "discovery",
+      "rewards": {"stone": 3},
+      "text": "幾塊大石頭自然拱起，形成了一個小門洞。"
+    },
+    {
+      "id": "tsh_metal_vein",
+      "position": [5, 1],
+      "neighbors": ["tsh_path_1", "tsh_wind"],
+      "cost": 1,
+      "type": "discovery",
+      "rewards": {"metal_fragment": 2},
+      "text": "石丘側面有一條細細的金屬礦脈，用指甲都能劃出痕跡。"
+    },
+    {
+      "id": "tsh_wind",
+      "position": [4, 2],
+      "neighbors": ["tsh_path_1", "tsh_metal_vein", "tsh_cave", "tsh_deep_1"],
+      "cost": 1,
+      "type": "event",
+      "event_id": "evt_stonehills_wind"
+    },
+    {
+      "id": "tsh_deep_1",
+      "position": [3, 2],
+      "neighbors": ["tsh_resource_1", "tsh_wind", "tsh_decor"],
+      "cost": 1,
+      "type": "discovery",
+      "rewards": {"stone": 1},
+      "text": "這裡的石頭更圓，像是被什麼東西磨過。"
+    },
+    {
+      "id": "tsh_far_1",
+      "position": [2, 3],
+      "neighbors": ["tsh_stone_arch", "tsh_deep_2", "tsh_far_2"],
+      "cost": 1,
+      "type": "discovery",
+      "rewards": {"stone": 1},
+      "text": "石丘的另一側，視野開了一些，可以看到更遠的霧。"
+    },
+    {
+      "id": "tsh_deep_2",
+      "position": [1, 3],
+      "neighbors": ["tsh_far_1", "tsh_cave"],
+      "cost": 1,
+      "type": "discovery",
+      "rewards": {"thread": 1},
+      "text": "石縫裡不知道從哪吹來一絲風，帶著織線的氣味。"
+    },
+    {
+      "id": "tsh_cave",
+      "position": [3, 3],
+      "neighbors": ["tsh_wind", "tsh_deep_2", "tsh_exit_future"],
+      "cost": 2,
+      "type": "event",
+      "event_id": "evt_cave_echo"
+    },
+    {
+      "id": "tsh_decor",
+      "position": [4, 3],
+      "neighbors": ["tsh_deep_1", "tsh_exit_future"],
+      "cost": 1,
+      "type": "decor",
+      "reward_id": "stone_lantern"
+    },
+    {
+      "id": "tsh_far_2",
+      "position": [2, 4],
+      "neighbors": ["tsh_far_1", "tsh_exit_future"],
+      "cost": 1,
+      "type": "discovery",
+      "rewards": {"metal_fragment": 1},
+      "text": "地上有一塊金屬碎片，不像是天然的，像是有人留下的。"
+    },
+    {
+      "id": "tsh_exit_future",
+      "position": [3, 4],
+      "neighbors": ["tsh_cave", "tsh_decor", "tsh_far_2"],
+      "cost": 2,
+      "type": "exit",
+      "target_maps": ["map_taichi_far"]
+    }
+  ]
+}

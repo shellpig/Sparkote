@@ -1,13 +1,13 @@
-# 眠石丘（stone_hill）
+# 眠石丘（map_taichi_stonehills）
 
-> 對應產出：`data/maps/stone_hill.json`。Schema 見 `開發設計方針.md §5.1`。
+> 對應產出：`data/maps/map_taichi_stonehills.json`。Schema 見 `開發設計方針.md §5.1`。
 > 逐日定位見 `subdocs/gate_d1_d7.md`（D4 開拓 + 家園第一次修復）。
 
 ## 定案
 
 | 欄位 | 值 |
 |---|---|
-| id | `stone_hill`（提案） |
+| id | `map_taichi_stonehills` |
 | name | 眠石丘 |
 | world | overworld（大千 正式區②） |
 | region | stone_hill |
