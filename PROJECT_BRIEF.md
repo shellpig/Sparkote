@@ -2,7 +2,7 @@
 
 本文件供新 session 快速了解專案全貌，減少每次重讀全部規格文件的成本。需要深入細節時，按下方文件索引讀對應規格。
 
-最後更新：2026-06-03
+最後更新：2026-06-04
 
 ---
 
@@ -17,13 +17,13 @@
 - **核心體驗**：現實完成小任務 → 獲得能量 → 翻開未知地圖格 → 取得資源 / 事件 / 物品 → 回饋家園與劇情
 - **目標平台**：iOS 先行，Android 第二次整合
 - **變現策略**：免費遊玩，rewarded ad、一次性無廣告、外觀裝飾、家園資源包；不直接賣能量 / 任務完成 / 主線探索進度
-- **目前狀態**：Phase 1-A / 1-B / 1-C / 1-D / 1-E 已完成並通過 headless GUT 驗證；Phase 1 全部子階段完成
-- **下一步**：Phase 2-A 地基（能量參數表、跳日鈕、headless 經濟曲線模擬）
+- **目前狀態**：Phase 1（1-A~1-E）與 Phase 2-A 已完成（headless GUT 89/89 全綠、經濟模擬可跑）；Phase 2-B 內容規格已寫入 `subdocs/`（D1–D7 逐日譜 + 6 張地圖 + 資源 / 家園），待實作者灌 data
+- **下一步**：Phase 2-B 實作（依 `subdocs/` 產 `data/maps/*.json` + items / home / tasks / events，灌進 Phase 1 同一份 schema）
 
 最新 commit：
 
 ```text
-24368fb Update PROJECT_BRIEF.md: Phase 1-E complete, next step Phase 2-A
+108c869 Implement Phase 2-A: headless economy sim and dev tool tests
 ```
 
 ## 核心調性
@@ -65,7 +65,7 @@
 
 ## 目錄結構
 
-Godot 專案本體已建立。Phase 1（1-A~1-E）完成後的實際結構：
+Godot 專案本體已建立。Phase 2-A 完成後的實際結構：
 
 ```text
 .
@@ -98,10 +98,13 @@ Godot 專案本體已建立。Phase 1（1-A~1-E）完成後的實際結構：
 │   ├── main.tscn
 │   └── ui/                     # task/map/diary/event_player/home_page.tscn
 ├── data/
-│   └── config.json             # 真內容 Phase 2 才灌；Phase 1 用 fixture
+│   └── config.json             # 能量參數基準；真內容 2-B 起灌
 ├── tests/
 │   ├── fixtures/               # config/tasks/items/home.json + maps/ + events/ + bad/
-│   └── unit/                   # 12 個 test_*.gd（含 phase1 smoke）
+│   └── unit/                   # 13 個 test_*.gd（含 phase1 smoke + 2-A sim 測試）
+├── tools/
+│   └── sim_economy.gd          # 2-A headless 經濟曲線模擬
+├── subdocs/                    # 2-B 內容規格：gate_d1_d7 + maps/ + _global/
 ├── ArtBible/
 └── 舊文件/
 ```
@@ -177,21 +180,21 @@ loader 必須對壞資料明確報錯、不靜默、不崩。最小 schema 見 `
 
 ## Phase 進度
 
-| Phase | 狀態 | 概要 |
-|:---|:---|:---|
-| 1-A 架構地基 | ✅ 完成 | `GameState`、`Config`、`Content` fixture loader、`SaveService`、`AdService` stub、`EventSystem` seam、`UINavigation`、啟動 / debug 場景；headless GUT 通過 |
-| 1-B 任務 + 能量 | ✅ 完成 | `TaskSystem`、`DayCycle`、任務頁、能量產出與提示；主場景啟動正常 |
-| 1-C 探索翻格 | ✅ 完成 | 相鄰 graph、霧、逐格成本、岔路、五種地點類型、資源點首採、多地圖切換；地圖頁切換正常 |
-| 1-D 事件 + 日記 | ✅ 完成 | 事件播放器、選項、獎勵 / 效果、日記頁、事件回看、心情筆記；支持重播 |
-| 1-E 家園 + 資源點 | ✅ 完成 | HomeSystem 修復/插槽、ResourcePoint 重採/集中採集、佔位家園頁；**Phase 1 headless GUT 79/79 全綠** |
-| 2-A 地基 | 📋 規格定案・待開工 | 能量參數表（對齊 config.json）、跳日鈕、headless 純經濟曲線模擬（不走 UI）、D1–D7 閘門腳本骨架 |
-| 2-B 內容 | 📋 規格定案・待開工 | 3–4 大千圖 + 1–2 第二世界圖、真任務池、真事件鏈（含新手贈點 D1–D7 緩降）、真家園 / 資源點定義 |
-| 2-C 手感閘門 (de-risk) | 📋 規格定案・待開工 | 硬指標（sim：Day6 可翻 ≥ 4、無 cap 失控）+ 軟手感四條清單，**雙過才准量產** |
-| 2-D 量產 | 📋 規格定案・待開工 | ~20 圖、大千 3 區 + 第二世界 2 區、主線 + 部分支線、出口鏈 / 阻擋 / 穿梭、家園完整修復 / 佈置、圖紙、背包分類 |
-| 3 變現整合 | ⬜ 待規劃 | 真 `AdService`、遊戲商店、IAP、無廣告、每日免費領取、恢復購買 |
-| 4 美術整合 + 正式 UI | ⬜ 待規劃 | ArtBible 換掉佔位：等角地圖、露營車內外、事件插圖、UI skin、動態回饋 |
-| 5 平台 / 存檔 / 通知 / iOS | ⬜ 待規劃 | 本機存檔落地、通知、iOS export + ATT、觸控化 |
-| 6 Endgame 雛形 + 平衡收尾 | ⬜ 待規劃 | 隨機地圖模板、照顧型回饋、整體平衡、D1/D7 留存埋點 |
+| Phase                      | 狀態                | 概要 |
+|:--------------------------|:-------------------|:---|
+| 1-A 架構地基               | ✅ 完成             | `GameState`、`Config`、`Content` fixture loader、`SaveService`、`AdService` stub、`EventSystem` seam、`UINavigation`、啟動 / debug 場景；headless GUT 通過 |
+| 1-B 任務 + 能量            | ✅ 完成             | `TaskSystem`、`DayCycle`、任務頁、能量產出與提示；主場景啟動正常 |
+| 1-C 探索翻格               | ✅ 完成             | 相鄰 graph、霧、逐格成本、岔路、五種地點類型、資源點首採、多地圖切換；地圖頁切換正常 |
+| 1-D 事件 + 日記            | ✅ 完成             | 事件播放器、選項、獎勵 / 效果、日記頁、事件回看、心情筆記；支持重播 |
+| 1-E 家園 + 資源點          | ✅ 完成             | HomeSystem 修復/插槽、ResourcePoint 重採/集中採集、佔位家園頁；**Phase 1 headless GUT 79/79 全綠** |
+| 2-A 地基                   | ✅ 完成             | 能量參數基準、跳日 / 廣告 dev tool 測試、`tools/sim_economy.gd` headless 經濟曲線模擬、D1–D10 輸出與 Day6 硬閘門 placeholder |
+| 2-B 內容                   | 📝 規格細化完成・待灌 data | 內容規格已寫入 `subdocs/`：D1–D7 逐日譜（gate_d1_d7）、6 張地圖（起始霧區 / 雨醒林 / 眠石丘 / 霧鈴原 / 微光晶谷 / 月影書庭）、資源（木/石/織/光晶）、家園 D1/D4/D7 成長、三封信教學階梯。待實作者依此產 `data/` |
+| 2-C 手感閘門 (de-risk)     | 📋 規格定案・待開工 | 硬指標（sim：Day6 可翻 ≥ 4、無 cap 失控）+ 軟手感四條清單，**雙過才准量產** |
+| 2-D 量產                   | 📋 規格定案・待開工 | ~20 圖、大千 3 區 + 第二世界 2 區、主線 + 部分支線、出口鏈 / 阻擋 / 穿梭、家園完整修復 / 佈置、圖紙、背包分類 |
+| 3 變現整合                 | ⬜ 待規劃           | 真 `AdService`、遊戲商店、IAP、無廣告、每日免費領取、恢復購買 |
+| 4 美術整合 + 正式 UI       | ⬜ 待規劃           | ArtBible 換掉佔位：等角地圖、露營車內外、事件插圖、UI skin、動態回饋 |
+| 5 平台 / 存檔 / 通知 / iOS | ⬜ 待規劃           | 本機存檔落地、通知、iOS export + ATT、觸控化 |
+| 6 Endgame 雛形 + 平衡收尾  | ⬜ 待規劃           | 隨機地圖模板、照顧型回饋、整體平衡、D1/D7 留存埋點 |
 
 > **Phase 2 核心 = 能量 → 資源 → 家園成長迴圈**；規格散落三處：範圍 / 判準見 `遊戲規格書.md §20`、實作契約見 `開發設計方針.md §8`、驗收清單見 `測試指南.md §6`。
 
@@ -234,7 +237,7 @@ C:\_work\Godot_v4.6.3\Godot_v4.6.3-stable_win64_console.exe --headless -s addons
 C:\_work\Godot_v4.6.3\Godot_v4.6.3-stable_win64_console.exe --headless -s addons/gut/gut_cmdln.gd -gtest=res://tests/unit/test_game_state.gd -gexit
 ```
 
-測試檔（皆已存在，headless 79/79 全綠）：
+測試檔（皆已存在；Phase 1 baseline 為 headless 79/79 全綠，2-A 新增 dev tool / sim 測試）：
 
 | 測試檔 | 涵蓋 |
 |---|---|
@@ -250,6 +253,7 @@ C:\_work\Godot_v4.6.3\Godot_v4.6.3-stable_win64_console.exe --headless -s addons
 | `test_event_diary.gd` | 1-D 事件播放 + 日記資料 |
 | `test_home_resource.gd` | 1-E 修復 + 資源點 |
 | `test_phase1_smoke.gd` | Phase 1 端到端煙霧 |
+| `test_economy_sim.gd` | 2-A 跳日 / 廣告 dev tool 接線與經濟模擬數學 |
 
 `git diff --check` 若只出現 LF -> CRLF warning，屬 Windows autocrlf 提示，不是 whitespace error。
 
@@ -264,7 +268,7 @@ C:\_work\Godot_v4.6.3\Godot_v4.6.3-stable_win64_console.exe --headless -s addons
 | `AGENTS.md` | 新 session 開場；專案規則、修改授權、驗證 / commit 規則、外部工具 |
 | `PROJECT_BRIEF.md` | 本檔；先讀建立全貌，再按下方行號索引深入 |
 
-### 遊戲規格書.md（~467 行）
+### 遊戲規格書.md（~469 行）
 
 全遊戲通用系統規格與驗收意圖；單一事實來源。
 
@@ -281,8 +285,8 @@ C:\_work\Godot_v4.6.3\Godot_v4.6.3-stable_win64_console.exe --headless -s addons
 | Content 資料模型 | 307-331 | 設計地圖 / 事件 / 物品 JSON 時 |
 | UINavigation / AdService / SaveService | 332-381 | 改導航 / 廣告介面 / 存檔時 |
 | 變現系統（架構） | 382-400 | Phase 3 變現前 |
-| **§20 Phase 規劃（Phase 2 子階段 + 能量數學 + 閘門判準）** | **401-451** | **規劃任一 phase；Phase 2 開工前必讀** |
-| §21 待決策 | 452-467 | 查未定數值（2-C 實機 / 開工時補） |
+| **§20 Phase 規劃（Phase 2 子階段 + 能量數學 + 閘門判準 + 2-B subdocs 落點）** | **401-453** | **規劃任一 phase；Phase 2 開工前必讀** |
+| §21 待決策 | 454-469 | 查未定數值（2-C 實機 / 開工時補） |
 
 ### 開發設計方針.md（~384 行）
 
@@ -319,7 +323,7 @@ verifier-owned：headless 命令、自動化項目、手動驗收清單。
 | `主角與故事提案.md`（~80 行） | 世界觀、蕾拉、第一 / 二封信開局；寫事件劇情 / `gate_d1_d7` 前 |
 | `廣告spike清單.md`（~79 行） | iOS rewarded ad spike 驗證背景；Phase 3 接真 plugin 前 |
 | `ArtBible/` | 等角地圖、露營車內外、事件插圖美術方向；Phase 4 前不整合 |
-| `subdocs/`（尚未建立） | 場景 / 內容專屬規格；對應內容 phase 開工才建 |
+| `subdocs/` | 場景 / 內容專屬規格。**2-B 已建立**：`gate_d1_d7.md`（D1–D7 單一事實來源逐日譜）、`maps/<id>.md`（6 圖一圖一份）、`_global/resources.md`・`_global/home.md`。實作 2-B 前必讀 |
 | `舊文件/` | 歷史 archive，除非明確要求，忽略 |
 
 ## 實作注意事項
@@ -336,7 +340,8 @@ verifier-owned：headless 命令、自動化項目、手動驗收清單。
 ## 目前已知邊界
 
 - Godot 專案本體已建立；Phase 1（1-A~1-E）全部已提交，headless GUT 79/79 全綠。
-- `subdocs/` 尚未建立；等內容 / 場景 phase 開工再新增。
+- Phase 2-A 已提交：`tools/sim_economy.gd` 可輸出 D1-D10 產 / 耗 / 結轉 / cap 溢出 / 可翻格數，`test_economy_sim.gd` 覆蓋跳日、廣告額外高級任務與 sim 數學。
+- `subdocs/` 已建立 2-B 內容規格（gate_d1_d7 + 6 map + resources/home）；tasks / events subdoc 與 tile 座標細節留待實作者開工時補。
 - `驗證後已知問題.md` 尚未建立。
 - `ArtBible/` 已有參考圖，但 Phase 4 前不整合正式美術。
 - iOS rewarded ad spike 已通過，但真 plugin 接入在 Phase 3。
@@ -346,15 +351,16 @@ verifier-owned：headless 命令、自動化項目、手動驗收清單。
 
 ## 下一步建議
 
-短線最合理下一步：**Phase 2-A 地基**。
+短線最合理下一步：**Phase 2-B 內容**。
 
 開工前先讀：
 
 - `遊戲規格書.md > §20 Phase 2`（範圍 / 子階段 / 閘門判準 / 能量數學）
 - `開發設計方針.md > §8 Phase 2`（subdocs→data 對應、dev 工具接線、headless 經濟模擬）
 - `測試指南.md > §6 Phase 2`（2-A 工具、2-C 硬+軟閘門清單、內容驗收）
+- `主角與故事提案.md`（D1-D7 真事件鏈與第一 / 二封信開局）
 
-Phase 1-E 已驗證：
+近期已完成：
 
 ```text
 HomeSystem.repair 消耗資源推進修復等級並記日記
@@ -363,4 +369,6 @@ HomeSystem.repair 消耗資源推進修復等級並記日記
 -> get_collectable_points 跨地圖掃描已開資源點今日狀態
 -> 佔位家園頁 + 集中採集子面板
 -> GUT headless 79/79 全綠（含 Phase 1 端到端煙霧測試）
+-> tools/sim_economy.gd 可跑 D1-D10 經濟曲線
+-> test_economy_sim.gd 覆蓋 2-A dev tool 接線與 Day6 硬閘門 placeholder
 ```

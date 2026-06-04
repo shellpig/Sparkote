@@ -9,7 +9,6 @@
 - **變現**：免費遊玩，rewarded ad（看廣告解鎖額外任務）為核心變現；iOS rewarded ad spike 已通過，Godot + admob 選型拍板，`AdService` 介面已驗證。
 - **目標平台**：iOS 先行（手上有測試機）+ Android（獨立第二次整合）；引擎 Godot 4.6.3 / GDScript。
 - **工作流**：沿用前作 AfterTheModel 的生產級工作流與工具鏈（`GameState` 模式、Godot 4.6、agent-sprite-forge）。
-- **目前進度**：設計討論已收斂（三份實作文件分工、系統分層、`GameState` / Content 模型、Phase 規劃定案）；**尚未開始實作**。Phase 1 = 純系統地基，全程用 fixture、零真內容。
   - Phase 進度（單一事實來源）見 `遊戲規格書.md > Phase 規劃`。
 
 ## New Conversation Opening Check
